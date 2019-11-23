@@ -13,12 +13,14 @@ var root_position = Vector3(50, 0, 50)
 
 enum SandType {
 	NONE,
-	SAND
+	SOFT_SAND,
+	HARD_SAND
 }
 
 var cube_spatial_dict = {}
 
-onready var cube_scene = load("res://Prefabs/SandSystem/SandCube.tscn")
+onready var soft_sand_prefab = load("res://Prefabs/SandSystem/SoftSand.tscn")
+onready var hard_sand_prefab = load("res://Prefabs/SandSystem/HardSand.tscn")
 
 func index_to_world_position(index: int) -> Vector3:
 	# warning-ignore:integer_division
@@ -74,12 +76,20 @@ func add_sand(position: Vector3, type_of_sand: int) -> void:
 	if position_index < 0 or position_index >= sand_voxels.size():
 		print("Trying to add sand outside of the sand bounds!")
 		return
+
+	if sand_voxels[position_index] != SandType.NONE:
+		print("Replacing sand that is already there!")
+		internal_remove_sand(position_index)
+
 	var cube : Spatial
 	var initial_health = 10
 	match type_of_sand:
-		SandType.SAND:
-			cube = cube_scene.instance()
+		SandType.SOFT_SAND:
+			cube = soft_sand_prefab.instance()
 			initial_health = 10
+		SandType.HARD_SAND:
+			cube = hard_sand_prefab.instance()
+			initial_health = 20
 
 	sand_voxels[position_index] = type_of_sand
 	health[position_index] = initial_health
@@ -114,7 +124,10 @@ func _ready() -> void:
 
 	for z in size_z:
 		for x in size_x:
-			add_sand(Vector3(x, 0, z) - root_position, SandType.SAND)
+			add_sand(Vector3(x, 0, z) - root_position, SandType.HARD_SAND)
+			add_sand(Vector3(x, 1, z) - root_position, SandType.HARD_SAND)
+			add_sand(Vector3(x, 2, z) - root_position, SandType.SOFT_SAND)
+			add_sand(Vector3(x, 3, z) - root_position, SandType.SOFT_SAND)
 
 
 
