@@ -17,10 +17,13 @@ export(int, 0, 1) var player_index := 0
 # Private state
 var _velocity := Vector3()
 var _on_ground := false
+var _is_dead := false
 
 var _carried_block: Spatial
 
 func _process(delta: float):
+	if _is_dead:
+		return
 	# Input
 	var dir := Vector3()
 	dir.x = Input.get_action_strength("move_-X_Player" + str(player_index+1)) - Input.get_action_strength("move_+X_Player" + str(player_index+1))
@@ -79,3 +82,7 @@ func _process(delta: float):
 		new_basis.x = new_basis.z.cross(new_basis.y).normalized()
 
 		_meshes.transform.basis = new_basis
+
+	if translation.y < -4:
+		GameState.report_player_death(player_index)
+		_is_dead = true

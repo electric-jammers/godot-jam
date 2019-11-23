@@ -2,6 +2,7 @@ extends Node
 
 # Emitted when stage changes
 signal stage_changed(new_stage)
+signal player_died(player_index)
 
 enum GameStage {
 	FRONTEND,
@@ -38,3 +39,7 @@ func enter_stage(new_game_stage):
 
 func get_sand_system() -> SandSystem:
 	return _sand_system
+
+func report_player_death(player_index: int):
+	print("AAAAAAAAAH Player Died: " + str(player_index))
+	emit_signal("player_died", player_index)
