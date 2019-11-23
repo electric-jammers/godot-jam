@@ -19,8 +19,8 @@ var _velocity := Vector3()
 var _on_ground := false
 var _is_dead := false
 
-var _carried_block: Spatial
-var _carried_block_info: int
+var _carried_blocks: Array # of Spatial
+var _carried_blocks_info: Array # of int
 
 func _ready():
 	var material = load("res://Materials/CharacterSkin.tres").duplicate() as SpatialMaterial
@@ -45,27 +45,27 @@ func _process(delta: float):
 
 	# Picking up
 	if Input.is_action_just_pressed("action_pickup_Player" + str(player_index+1)):
-		if not _carried_block:
-			var sand_info = sand.extract_sand(translation - Vector3(0.0, 1.0, 0.0))
+		var sand_info = sand.extract_sand(translation - Vector3(0.0, 1.0, 0.0))
 
-			if sand_info.size() > 0:
-				_carried_block = sand_info[0]
-				_carried_block_info = sand_info[1]
+		if sand_info.size() > 0:
+			var new_block = sand_info[0]
 
-				var block_collision = _carried_block.get_node("CollisionShape") as CollisionShape
-				block_collision.disabled = true
+			_carried_blocks.push_back(new_block)
+			_carried_blocks_info.push_back(sand_info[1])
 
-				_carried_block.get_parent_spatial().remove_child(_carried_block)
-				_carried_block.translation = Vector3(0.0, 3.0, 0.0)
-				add_child(_carried_block)
+			var block_collision = new_block.get_node("CollisionShape") as CollisionShape
+			block_collision.disabled = true
+
+			new_block.get_parent_spatial().remove_child(new_block)
+			new_block.translation = Vector3(0.0, 3.0, 0.0)
+			add_child(new_block)
 
 	if Input.is_action_just_pressed("action_place_Player" + str(player_index+1)):
-		if _carried_block:
+		if not _carried_blocks.empty():
 			var in_front = global_transform.origin + Vector3(0.0, 10.0, 0.0) - _meshes.transform.basis.z
-			if sand.add_sand(in_front, _carried_block_info):
-				_carried_block.queue_free()
-				_carried_block = null
-	#$DebugLabel.text = "ground? " + str(_on_ground)
+			if sand.add_sand(in_front, _carried_blocks_info.back()):
+				_carried_blocks.pop_back().queue_free()
+				_carried_blocks_info.pop_back()
 
 
 	# "Physics"
