@@ -57,7 +57,7 @@ func _process(delta: float):
 			block_collision.disabled = true
 
 			new_block.get_parent_spatial().remove_child(new_block)
-			new_block.translation = Vector3(0.0, 3.0, 0.0)
+			new_block.translation = Vector3(0.0, _carried_blocks.size() * 1.0 + 2.0, 0.0)
 			add_child(new_block)
 
 	if Input.is_action_just_pressed("action_place_Player" + str(player_index+1)):
