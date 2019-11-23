@@ -106,7 +106,7 @@ func add_sand(position: Vector3, type_of_sand: int) -> bool:
 
 	# make sure that the sand is stacked on top of other sand!
 	var next_position_to_check := position
-	while position_index >= 0:
+	while int(next_position_to_check.y) > 0:
 		next_position_to_check.y = next_position_to_check.y - 1
 		var next_position_index_to_check := position_to_index(next_position_to_check)
 		if sand_voxels[next_position_index_to_check] != SandType.NONE:
