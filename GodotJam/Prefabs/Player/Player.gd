@@ -59,11 +59,10 @@ func _process(delta: float):
 				_carried_block.translation = Vector3(0.0, 3.0, 0.0)
 				add_child(_carried_block)
 		else:
-			var in_front = global_transform.origin - _meshes.transform.basis.z
-			sand.add_sand(in_front, _carried_block_info)
-
-			_carried_block.queue_free()
-			_carried_block = null
+			var in_front = global_transform.origin + Vector3(0.0, 0.5, 0.0) - _meshes.transform.basis.z
+			if sand.add_sand(in_front, _carried_block_info):
+				_carried_block.queue_free()
+				_carried_block = null
 
 
 	$DebugLabel.text = "ground? " + str(_on_ground)
