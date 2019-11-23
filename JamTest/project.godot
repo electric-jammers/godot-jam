@@ -16,6 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="GodotJamTest"
+run/main_scene="res://scripts/mat_changer.tscn"
 config/icon="res://icon.png"
 
 [rendering]
