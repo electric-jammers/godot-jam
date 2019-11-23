@@ -1,11 +1,11 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://scripts/mat_changer.gd" type="Script" id=1]
+[ext_resource path="res://scripts/mega_cube.gd" type="Script" id=1]
 
 [sub_resource type="CubeMesh" id=1]
 
 [sub_resource type="SpatialMaterial" id=2]
-albedo_color = Color( 0.365866, 0, 0, 1 )
+albedo_color = Color( 0.394363, 0.934295, 0.761059, 1 )
 
 [node name="Spatial" type="Spatial"]
 
