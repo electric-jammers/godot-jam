@@ -42,10 +42,10 @@ func _process(delta: float):
 	move_and_slide(_velocity * delta)
 
 	# Facing
-	if _velocity.length_squared() > 100.0:
-		var ground_velocity = _velocity
-		ground_velocity.y = 0.0
+	var ground_velocity = _velocity
+	ground_velocity.y = 0.0
 
+	if ground_velocity.length_squared() > 100.0:
 		var new_basis := Basis()
 		new_basis.y = Vector3.UP
 		new_basis.z = ground_velocity.normalized()

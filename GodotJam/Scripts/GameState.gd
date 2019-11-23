@@ -33,3 +33,6 @@ func enter_stage(new_game_stage):
 	emit_signal("stage_changed", new_game_stage)
 
 	time_in_stage = 0.0
+
+func get_sand_system() -> SandSystem:
+	return get_tree().root.get_node("SandSystem") as SandSystem

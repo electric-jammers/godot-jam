@@ -41,8 +41,27 @@ func position_to_index(position: Vector3) -> int:
 	var z := int(position.z)
 	return internal_ints_to_index(x, y, z)
 
+
 func internal_ints_to_index(var x, var y, var z) -> int:
 	return int(x) + (int(y) * size_x * size_z) + (int(z) * (size_x))
+
+func get_sand_height(xz_pos: Vector2) -> float:
+
+	var y_lowest :int= 0
+	var x := int (xz_pos.x - root_position.x)
+	var z := int (xz_pos.y - root_position.z)
+
+	for y in size_y:
+		var position_index = internal_ints_to_index(x, y, z)
+		if position_index < 0 or position_index >= sand_voxels.size():
+			print("Trying to get sand height out of bounds!")
+			return -1.0
+
+		if sand_voxels[position_index] == SandType.NONE:
+			return float(y)
+
+	return float(size_y)
+
 
 func damage_sand(position: Vector3, damage_amount: int) -> void:
 	var position_index := position_to_index(position)
