@@ -3,7 +3,7 @@ extends Node
 class_name SandSystem
 
 var sand_voxels :=  PoolByteArray ()
-var damage := PoolByteArray()
+var health := PoolByteArray()
 
 var size_x : int = 100
 var size_y : int = 100
@@ -11,7 +11,7 @@ var size_z : int = 100
 
 var root_position = Vector3(50, 0, 50)
 
-enum SandState {
+enum SandType {
 	NONE,
 	SAND
 }
@@ -34,27 +34,70 @@ func position_to_index(position: Vector3) -> int:
 	var x := int(position.x)
 	var y := int(position.y)
 	var z := int(position.z)
+	return internal_ints_to_index(x, y, z)
+
+func internal_ints_to_index(var x, var y, var z) -> int:
 	return int(x) + (int(y) * size_x * size_z) + (int(z) * (size_x))
 
+func damage_sand(position: Vector3, damage_amount: int) -> void:
+	var position_index := position_to_index(position)
+	internal_damage_sand(position_index, damage_amount)
 
-func add_sand(position: Vector3) -> void:
+func internal_damage_sand(position_index: int, damage_amount: int) -> void:
+	if position_index < 0 or position_index >= sand_voxels.size():
+		print("Trying to damage sand outside of the sand bounds!")
+		return
+
+	if sand_voxels[position_index] == SandType.NONE:
+		return
+
+	var health_value := health[position_index] - damage_amount
+	if(health_value <= 0):
+		health[position_index] = 0
+		internal_remove_sand(position_index)
+	else:
+		health[position_index] = health_value
+
+func damage_all_sand_up_to_height(max_height: int, damage_amount: int) -> void:
+	for height in max_height:
+		for z in size_z:
+			for x in size_x:
+				var postition_index := internal_ints_to_index(x, height, z)
+				internal_damage_sand(postition_index, damage_amount)
+
+func add_sand(position: Vector3, type_of_sand: int) -> void:
+	if type_of_sand == SandType.NONE:
+		print("Trying to add sand outside of the sand bounds!")
+		return
+
 	var position_index := position_to_index(position)
 	if position_index < 0 or position_index >= sand_voxels.size():
-		print("Trying to remove sand outside of the sand bounds!")
+		print("Trying to add sand outside of the sand bounds!")
 		return
-	sand_voxels.set(position_to_index(position), SandState.SAND)
-	damage.set(position_to_index(position), 0)
-	var cube : Spatial = cube_scene.instance()
+	var cube : Spatial
+	var initial_health = 10
+	match type_of_sand:
+		SandType.SAND:
+			cube = cube_scene.instance()
+			initial_health = 10
+
+	sand_voxels[position_index] = type_of_sand
+	health[position_index] = initial_health
 	add_child(cube)
 	cube_spatial_dict[position_index] = cube
 	cube.translation = index_to_world_position(position_index)
 
+
 func remove_sand(position: Vector3) -> void:
 	var position_index := position_to_index(position)
+	internal_remove_sand(position_index)
+
+func internal_remove_sand(position_index: int) -> void:
 	if position_index < 0 or position_index >= sand_voxels.size():
 		print("Trying to remove sand outside of the sand bounds!")
 		return
-	sand_voxels.set(position_to_index(position), SandState.NONE)
+
+	sand_voxels[position_index] =  SandType.NONE
 	if cube_spatial_dict.has(position_index):
 		var cube : Spatial = cube_spatial_dict[position_index]
 		cube.queue_free()
@@ -64,12 +107,14 @@ func remove_sand(position: Vector3) -> void:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	sand_voxels.resize(size_x * size_y * size_z)
-	damage.resize(size_x * size_y * size_z)
+	health.resize(size_x * size_y * size_z)
 	for index in sand_voxels.size():
-		sand_voxels.set(index, SandState.NONE)
-		damage.set(index, 0)
+		sand_voxels.set(index, SandType.NONE)
+		health.set(index, 0)
 
-	for x in size_x:
-		for z in size_z:
-			add_sand(Vector3(x, 0, z) - root_position)
+	for z in size_z:
+		for x in size_x:
+			add_sand(Vector3(x, 0, z) - root_position, SandType.SAND)
+
+
 
