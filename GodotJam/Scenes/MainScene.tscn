@@ -15,7 +15,7 @@ flip_faces = true
 radius = 300.0
 height = 600.0
 
-[node name="Spatial" type="Spatial"]
+[node name="GameScene" type="Spatial"]
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 0.947182, 0.131649, -0.292428, 0, 0.911855, 0.410512, 0.320696, -0.38883, 0.863693, -5.25518, 9.61406, 19.2241 )
