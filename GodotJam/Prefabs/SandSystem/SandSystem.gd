@@ -101,5 +101,4 @@ func _ready() -> void:
 		for z in size_z:
 			add_sand(Vector3(x, 0, z) - root_position, SandType.SAND)
 
-	damage_sand(Vector3(0, 0, 0), 11)
 
