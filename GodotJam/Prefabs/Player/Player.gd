@@ -28,7 +28,7 @@ func _ready():
 		if child is MeshInstance:
 			child.set_surface_material(0, material)
 
-	material.albedo_color = [Color(0.607843, 0.47451, 0.313726), Color(0.356863, 0.662745, 0.513726)][player_index]
+	material.albedo_color = [Color(0.698039, 0.364706, 0.27451), Color(0.356863, 0.662745, 0.513726)][player_index]
 
 func _process(delta: float):
 	if _is_dead:
@@ -44,8 +44,10 @@ func _process(delta: float):
 	var sand = GameState.get_sand_system()
 
 	# Picking up
+	var action_location : Vector3 = translation - Vector3(0.0, 1.0, 0.0) + (_meshes.transform.basis.z * 2.0)
+	sand.draw_dummy(action_location, player_index)
 	if Input.is_action_just_pressed("action_pickup_Player" + str(player_index+1)):
-		var sand_info = sand.extract_sand(translation - Vector3(0.0, 1.0, 0.0))
+		var sand_info = sand.extract_sand(action_location)
 
 		if sand_info.size() > 0:
 			var new_block = sand_info[0]
@@ -57,12 +59,12 @@ func _process(delta: float):
 			block_collision.disabled = true
 
 			new_block.get_parent_spatial().remove_child(new_block)
-			new_block.translation = Vector3(0.0, 3.0, 0.0)
+			new_block.translation = Vector3(0.0, _carried_blocks.size() * 1.0 + 2.0, 0.0)
 			add_child(new_block)
 
 	if Input.is_action_just_pressed("action_place_Player" + str(player_index+1)):
 		if not _carried_blocks.empty():
-			var in_front = global_transform.origin + Vector3(0.0, 10.0, 0.0) - _meshes.transform.basis.z
+			var in_front = action_location + Vector3(0.0, 10.0, 0.0)
 			if sand.add_sand(in_front, _carried_blocks_info.back()):
 				_carried_blocks.pop_back().queue_free()
 				_carried_blocks_info.pop_back()
