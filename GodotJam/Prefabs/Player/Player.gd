@@ -20,6 +20,15 @@ var _on_ground := false
 var _is_dead := false
 
 var _carried_block: Spatial
+var _carried_block_info: int
+
+func _ready():
+	var material = load("res://Materials/CharacterSkin.tres").duplicate() as SpatialMaterial
+	for child in _meshes.get_children():
+		if child is MeshInstance:
+			child.set_surface_material(0, material)
+
+	material.albedo_color = [Color.red, Color.blue][player_index]
 
 func _process(delta: float):
 	if _is_dead:
@@ -34,15 +43,14 @@ func _process(delta: float):
 
 	# Picking up
 	if Input.is_action_just_pressed("action_Player" + str(player_index+1)):
+		var sand = GameState.get_sand_system()
+
 		if not _carried_block:
-			var ss = GameState.get_sand_system()
-			var sandy = ss.extract_sand(translation - Vector3(0.0, 1.0, 0.0))
+			var sand_info = sand.extract_sand(translation - Vector3(0.0, 1.0, 0.0))
 
-			if sandy.size() > 0:
-				var node = sandy[0]
-				var type = sandy[1]
-
-				_carried_block = node
+			if sand_info.size() > 0:
+				_carried_block = sand_info[0]
+				_carried_block_info = sand_info[1]
 
 				var block_collision = _carried_block.get_node("CollisionShape") as CollisionShape
 				block_collision.disabled = true
@@ -51,10 +59,10 @@ func _process(delta: float):
 				_carried_block.translation = Vector3(0.0, 3.0, 0.0)
 				add_child(_carried_block)
 		else:
-			#TODO: place in front
-
-			_carried_block.queue_free()
-			_carried_block = null
+			var in_front = global_transform.origin + Vector3(0.0, 0.5, 0.0) - _meshes.transform.basis.z
+			if sand.add_sand(in_front, _carried_block_info):
+				_carried_block.queue_free()
+				_carried_block = null
 
 
 	$DebugLabel.text = "ground? " + str(_on_ground)
