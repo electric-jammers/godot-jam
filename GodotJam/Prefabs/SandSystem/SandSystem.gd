@@ -5,11 +5,11 @@ class_name SandSystem
 var sand_voxels :=  PoolByteArray ()
 var health := PoolByteArray()
 
-var size_x : int = 50
-var size_y : int = 50
-var size_z : int = 30
+var size_x : int = 26
+var size_y : int = 16
+var size_z : int = 16
 
-var root_position = Vector3(25, 0, 15)
+var root_position = Vector3(13, 0, 8)
 
 enum SandType {
 	NONE,
