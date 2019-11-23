@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "SandSystem",
 "language": "GDScript",
 "path": "res://Prefabs/SandSystem/SandSystem.gd"
+}, {
+"base": "Spatial",
+"class": "WaterPlane",
+"language": "GDScript",
+"path": "res://Prefabs/WaterPlane/WaterPlane.gd"
 } ]
 _global_script_class_icons={
-"SandSystem": ""
+"SandSystem": "",
+"WaterPlane": ""
 }
 
 [application]
