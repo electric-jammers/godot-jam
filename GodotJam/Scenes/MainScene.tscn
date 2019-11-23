@@ -14,14 +14,10 @@ height = 600.0
 
 [node name="Spatial" type="Spatial"]
 
-[node name="Root" type="Spatial"]
-
-[node name="SandSystem" parent="." instance=ExtResource( 1 )]
-
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.11291 )
 far = 8000.0
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
+[node name="SkySphere" type="MeshInstance" parent="."]
 mesh = SubResource( 2 )
 material/0 = null

@@ -2,6 +2,9 @@ shader_type spatial;
 
 uniform float dayNightValue = 1.0; // 0 = day, 1 = night
 
+uniform sampler2D moonSampler;
+uniform sampler2D sunSampler;
+
 varying vec3 viewDir;
 void vertex()
 {
