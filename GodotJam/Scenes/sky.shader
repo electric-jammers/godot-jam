@@ -32,7 +32,7 @@ void fragment()
 	vec3 nightCol = mix(vec3(0.03, 0.03, 0.08), vec3(0.07, 0.07, 0.15), pow(y, 4.0)) + pow(y, 2.0) * stars(viewDir);
 	
 	vec3 fogCol = mix(vec3(0.95, 0.7, 0.6), vec3(0.6, 0.7, 0.95), delta);
-	float fog = clamp(pow(1.0-viewDir.y, 10.0)-0.2, 0, 1.0);
+	float fog = clamp(pow(1.0-viewDir.y, 15.0)-0.1, 0, 1.0);
 	
 	ALBEDO = mix(mix(dayCol, nightCol, delta), fogCol, fog);
 }
