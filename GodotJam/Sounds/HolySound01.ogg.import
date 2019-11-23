@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/HolySound01.ogg-8e3eac90b07c0919e4e116f2af004f4f.oggstr"
+
+[deps]
+
+source_file="res://Sounds/HolySound01.ogg"
+dest_files=[ "res://.import/HolySound01.ogg-8e3eac90b07c0919e4e116f2af004f4f.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

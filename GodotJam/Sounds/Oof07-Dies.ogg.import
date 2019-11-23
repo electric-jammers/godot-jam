@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Oof07-Dies.ogg-4c47b29075033ea7a8cf897017df02cd.oggstr"
+
+[deps]
+
+source_file="res://Sounds/Oof07-Dies.ogg"
+dest_files=[ "res://.import/Oof07-Dies.ogg-4c47b29075033ea7a8cf897017df02cd.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

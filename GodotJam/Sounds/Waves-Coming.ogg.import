@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Waves-Coming.ogg-29c012cbd26e3011ac5f39f96cd43bef.oggstr"
+
+[deps]
+
+source_file="res://Sounds/Waves-Coming.ogg"
+dest_files=[ "res://.import/Waves-Coming.ogg-29c012cbd26e3011ac5f39f96cd43bef.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

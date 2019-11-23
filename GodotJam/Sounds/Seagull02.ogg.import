@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Seagull02.ogg-9e42b18448fcd2dd8168f5b6e0ebd4d5.oggstr"
+
+[deps]
+
+source_file="res://Sounds/Seagull02.ogg"
+dest_files=[ "res://.import/Seagull02.ogg-9e42b18448fcd2dd8168f5b6e0ebd4d5.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
