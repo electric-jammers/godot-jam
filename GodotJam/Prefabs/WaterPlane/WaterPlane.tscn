@@ -18,7 +18,7 @@ uniform sampler2D waterTexture;
 
 uniform float waveHeight = 2.0;
 uniform float waveSpeed = 5.0;
-uniform float waveScale = 1.0;
+uniform float waveScale = 5.0;
 uniform float waveTextureSpeed = 0.1;
 
 void vertex()
@@ -26,7 +26,7 @@ void vertex()
 	//VERTEX.y += sin((TIME * waveSpeed) + (VERTEX.x + VERTEX.z) * waveScale) * waveHeight; 
 	VERTEX.y += sin((TIME * waveSpeed) + ((VERTEX.x + VERTEX.z) * waveScale) + texture(waterTexture, VERTEX.xz).r * 5.0) * waveHeight;
 	
-	UV *= 32.0;
+	UV *= 64.0;
 }
 
 void fragment()
@@ -37,9 +37,9 @@ void fragment()
 	vec4 secondTex = texture(waterTexture, vec2(-UV.y, UV.x) + TIME * waveTextureSpeed * 0.4);
 	
 	vec3 fogCol = mix(vec3(0.95, 0.7, 0.6), vec3(0.6, 0.7, 0.95), delta);
-	float fog = clamp(pow(length(VERTEX)*0.005, 3.5), 0, 1.0);
+	float fog = clamp(pow(length(VERTEX)*0.009, 5.5), 0, 1.0);
 	
-	ALBEDO = mix((vec4(0.0, 0.6, 1.0, 1.0) * (firstTex + secondTex*.3)).rgb, fogCol, fog);
+	ALBEDO = mix((vec4(0.0, 0.18, 0.3, 1.0) * (firstTex + secondTex*.3)).rgb, fogCol, fog);
 }"
 
 [sub_resource type="ShaderMaterial" id=3]
