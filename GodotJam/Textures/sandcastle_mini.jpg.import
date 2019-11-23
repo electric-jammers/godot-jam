@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/sandcastle_mini.jpg-a4ff73971d67cdabc8ae80392c324025.stex"
+path="res://.import/sandcastle_mini.jpg-971b971a34b5568e00e523d5062c8a7c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/Textures/sandcastle_mini.jpg"
-dest_files=[ "res://.import/sandcastle_mini.jpg-a4ff73971d67cdabc8ae80392c324025.stex" ]
+source_file="res://Textures/sandcastle_mini.jpg"
+dest_files=[ "res://.import/sandcastle_mini.jpg-971b971a34b5568e00e523d5062c8a7c.stex" ]
 
 [params]
 

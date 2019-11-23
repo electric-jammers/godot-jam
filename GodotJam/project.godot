@@ -21,8 +21,12 @@ _global_script_class_icons={
 [application]
 
 config/name="Godotjam"
-run/main_scene="res://Scenes/MainScene.tscn"
+run/main_scene="res://Scenes/MainMenu.tscn"
 config/icon="res://icon.png"
+
+[display]
+
+window/size/resizable=false
 
 [rendering]
 
