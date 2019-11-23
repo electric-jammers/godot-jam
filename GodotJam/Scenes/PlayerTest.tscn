@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Prefabs/Player/Player.tscn" type="PackedScene" id=1]
+
+[node name="Spatial" type="Spatial"]
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( -1, -2.30405e-07, 2.30405e-07, 0, 0.707107, 0.707107, -3.25841e-07, 0.707107, -0.707107, 2.38419e-07, 13.5369, -11.7297 )
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0272107, -0.020956, -0.0256329 )
+
+[node name="CSGBox" type="CSGBox" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.3323, 0, 0 )
+use_collision = true
+height = 12.8556
+depth = 14.4731
