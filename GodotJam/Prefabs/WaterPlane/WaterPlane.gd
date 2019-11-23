@@ -25,3 +25,7 @@ func animate_away(duration: float = 1.0):
 	_move_to_top_tween.start()
 
 	yield(_move_to_top_tween, "tween_all_completed")
+
+func _process(delta):
+	var shader_mat = _water_plane.get_surface_material(0) as ShaderMaterial
+	shader_mat.set_shader_param("dayNightValue", GameState.get_normalized_stage_time())
