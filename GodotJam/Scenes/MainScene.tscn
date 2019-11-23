@@ -30,3 +30,4 @@ material/0 = null
 [node name="DayNight" parent="." instance=ExtResource( 3 )]
 
 [node name="WaterAnchor" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0 )
