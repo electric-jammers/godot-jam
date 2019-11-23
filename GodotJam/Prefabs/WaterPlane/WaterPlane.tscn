@@ -12,6 +12,8 @@ subdivide_depth = 50
 code = "shader_type spatial;
 render_mode unshaded;
 
+uniform float dayNightValue;
+
 uniform sampler2D waterTexture;
 
 uniform float waveHeight = 2.0;
@@ -22,20 +24,28 @@ uniform float waveTextureSpeed = 0.1;
 void vertex()
 {
 	//VERTEX.y += sin((TIME * waveSpeed) + (VERTEX.x + VERTEX.z) * waveScale) * waveHeight; 
-	VERTEX.y += sin((TIME * waveSpeed) + ((VERTEX.x + VERTEX.z) * waveScale) + texture(waterTexture, VERTEX.xz).r * 5.0) * waveHeight; 
-	UV *= 16.0;
+	VERTEX.y += sin((TIME * waveSpeed) + ((VERTEX.x + VERTEX.z) * waveScale) + texture(waterTexture, VERTEX.xz).r * 5.0) * waveHeight;
+	
+	UV *= 32.0;
 }
 
 void fragment()
 {
-	vec4 firstTex = texture(waterTexture, UV - TIME * waveTextureSpeed);
-	vec4 secondTex = texture(waterTexture, UV.yx + TIME * waveTextureSpeed * 0.5);
+	float delta = abs(2.0*fract(dayNightValue)-1.0);
 	
-	ALBEDO = (vec4(0.0, 0.6, 1.0, 1.0) * (firstTex + secondTex)).rgb;
+	vec4 firstTex = texture(waterTexture, UV - TIME * waveTextureSpeed);
+	vec4 secondTex = texture(waterTexture, vec2(-UV.y, UV.x) + TIME * waveTextureSpeed * 0.4);
+	
+	vec3 fogCol = mix(vec3(0.95, 0.7, 0.6), vec3(0.6, 0.7, 0.95), delta);
+	float fog = clamp(pow(length(VERTEX)*0.005, 3.5), 0, 1.0);
+	
+	ALBEDO = mix((vec4(0.0, 0.6, 1.0, 1.0) * (firstTex + secondTex*.3)).rgb, fogCol, fog);
 }"
 
 [sub_resource type="ShaderMaterial" id=3]
+render_priority = 100
 shader = SubResource( 2 )
+shader_param/dayNightValue = null
 shader_param/waveHeight = 0.8
 shader_param/waveSpeed = 5.0
 shader_param/waveScale = 1.0
@@ -46,7 +56,7 @@ shader_param/waterTexture = ExtResource( 1 )
 script = ExtResource( 2 )
 
 [node name="WaterPlane" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0327148, 7.62939e-06, 0.703904 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0757862, 3.57627e-06, 0.798246 )
 mesh = SubResource( 1 )
 material/0 = SubResource( 3 )
 
