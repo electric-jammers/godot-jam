@@ -44,8 +44,10 @@ func _process(delta: float):
 	var sand = GameState.get_sand_system()
 
 	# Picking up
+	var action_location := translation - Vector3(0.0, 1.0, 0.0)
+	sand.draw_dummy(action_location, player_index)
 	if Input.is_action_just_pressed("action_pickup_Player" + str(player_index+1)):
-		var sand_info = sand.extract_sand(translation - Vector3(0.0, 1.0, 0.0))
+		var sand_info = sand.extract_sand(action_location)
 
 		if sand_info.size() > 0:
 			var new_block = sand_info[0]
@@ -62,7 +64,7 @@ func _process(delta: float):
 
 	if Input.is_action_just_pressed("action_place_Player" + str(player_index+1)):
 		if not _carried_blocks.empty():
-			var in_front = global_transform.origin + Vector3(0.0, 10.0, 0.0) - _meshes.transform.basis.z
+			var in_front = action_location + Vector3(0.0, 10.0, 0.0)
 			if sand.add_sand(in_front, _carried_blocks_info.back()):
 				_carried_blocks.pop_back().queue_free()
 				_carried_blocks_info.pop_back()

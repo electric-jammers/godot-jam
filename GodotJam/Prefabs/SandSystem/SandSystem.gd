@@ -24,6 +24,9 @@ var locations_to_drop = []
 onready var soft_sand_prefab = load("res://Prefabs/SandSystem/SoftSand.tscn")
 onready var hard_sand_prefab = load("res://Prefabs/SandSystem/HardSand.tscn")
 onready var rock_prefab = load("res://Prefabs/SandSystem/Rock.tscn")
+onready var dummy_prefab = load("res://Prefabs/SandSystem/Dummy.tscn")
+
+var dummies = {}
 
 func index_to_world_position(index: int) -> Vector3:
 	# warning-ignore:integer_division
@@ -134,6 +137,17 @@ func add_sand(position: Vector3, type_of_sand: int) -> bool:
 	cube.translation = index_to_world_position(position_index)
 	return true
 
+func draw_dummy(position: Vector3, dummy_index: int) -> void:
+	var position_index = position_to_index(position)
+	var snapped_position = index_to_world_position(position_index)
+	if !dummies.has(dummy_index):
+		var dummy = dummy_prefab.instance()
+		add_child(dummy)
+		dummies[dummy_index] = dummy
+	var dummy = dummies[dummy_index]
+	dummy.translation = snapped_position
+	dummy.translation.y += 1.0
+
 
 func remove_sand(position: Vector3) -> void:
 	var position_index := position_to_index(position)
@@ -215,6 +229,7 @@ func _ready() -> void:
 			add_sand(Vector3(x, 4, z) - root_position, SandType.SOFT_SAND)
 
 	GameState._sand_system = self
+
 
 func _exit_tree():
 	GameState._sand_system = null
