@@ -1,6 +1,17 @@
-[gd_resource type="Environment" format=2]
+[gd_resource type="Environment" load_steps=2 format=2]
+
+[sub_resource type="ProceduralSky" id=1]
+sky_top_color = Color( 0.113725, 0.14902, 0.94902, 1 )
 
 [resource]
+background_sky = SubResource( 1 )
 background_canvas_max_layer = 1
 ambient_light_color = Color( 1, 1, 1, 1 )
-ambient_light_energy = 0.1
+ambient_light_energy = 0.15
+fog_depth_curve = 1.7411
+tonemap_mode = 1
+tonemap_exposure = 0.63
+tonemap_white = 1.09
+glow_enabled = true
+glow_intensity = 0.53
+glow_bloom = 1.0
