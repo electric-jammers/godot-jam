@@ -21,8 +21,8 @@ var _on_ground := false
 func _process(delta: float):
 	# Input
 	var dir := Vector3()
-	dir.x = Input.get_action_strength("move_+X_Player" + str(player_index+1)) - Input.get_action_strength("move_-X_Player" + str(player_index+1))
-	dir.z = Input.get_action_strength("move_+Y_Player" + str(player_index+1)) - Input.get_action_strength("move_-Y_Player" + str(player_index+1))
+	dir.x = Input.get_action_strength("move_-X_Player" + str(player_index+1)) - Input.get_action_strength("move_+X_Player" + str(player_index+1))
+	dir.z = Input.get_action_strength("move_-Y_Player" + str(player_index+1)) - Input.get_action_strength("move_+Y_Player" + str(player_index+1))
 
 	_velocity += dir * SPEED
 	_on_ground = _floor_raycast.is_colliding()
