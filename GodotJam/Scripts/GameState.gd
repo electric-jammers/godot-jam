@@ -10,10 +10,16 @@ enum GameStage {
 	NIGHT
 }
 
+const STAGE_LEN = 30.0
+
 var current_time := 0.0
 var time_in_stage := 0.0
 
 var stage = GameStage.FRONTEND
+
+# 0 = noon, 0.5 = midnight, 1 = noon
+func get_normalized_stage_time():
+	return time_in_stage / STAGE_LEN
 
 func _process(delta: float):
 	if stage == GameStage.FRONTEND:
