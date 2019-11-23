@@ -1,0 +1,70 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Prefabs/WaterPlane/WaterPlane.tscn" type="PackedScene" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Spatial
+
+# Subnodes
+onready var _water_plane = $WaterPlane as WaterPlane
+
+func _input(event: InputEvent):
+	if event is InputEventKey and event.scancode == KEY_T:
+		_water_plane.animate_to_height(14.5)
+		yield(_water_plane, \"water_at_top\")
+		yield(get_tree().create_timer(1.0), \"timeout\")
+		_water_plane.animate_away()
+"
+
+[sub_resource type="CubeMesh" id=2]
+size = Vector3( 50, 10, 100 )
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 1, 0.654902, 0, 1 )
+
+[sub_resource type="CubeMesh" id=4]
+material = SubResource( 3 )
+size = Vector3( 20, 10, 20 )
+
+[sub_resource type="CubeMesh" id=5]
+material = SubResource( 3 )
+size = Vector3( 100, 10, 100 )
+
+[node name="Spatial" type="Spatial"]
+script = SubResource( 1 )
+
+[node name="WaterPlane" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.033, 20, -0.296 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.545912, 0.837843, 0, -0.837843, 0.545912, -54, 10.2386, -2.30084 )
+shadow_enabled = true
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, -4.37115e-08, -2.50131e-07, 2.07778e-07, 0.707107, 0.707107, 1.45961e-07, -0.707107, 0.707107, 3, 73.3517, 92.709 )
+far = 2000.0
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -44, 24, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 34, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="MeshInstance5" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0 )
+mesh = SubResource( 5 )
+material/0 = null
+
+[node name="MeshInstance4" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 46, 34, 0 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 3 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 51, 24, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
