@@ -6,6 +6,7 @@ uniform sampler2D moonSampler;
 uniform sampler2D sunSampler;
 
 varying vec3 viewDir;
+
 void vertex()
 {
 	viewDir = normalize(VERTEX);
