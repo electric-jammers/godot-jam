@@ -5,11 +5,11 @@ onready var _meshes = $Mesh as Spatial
 onready var _floor_raycast = $FloorCast as RayCast
 
 # Consts
-const AIR_FRICTION := 0.02
-const GROUND_FRICTION := 0.05
-const SPEED := 40.0
-const JUMP_POWER := 800.0
-const GRAVITY := 25.0
+const AIR_FRICTION := 0.2
+const GROUND_FRICTION := 0.3
+const SPEED := 300.0
+const JUMP_POWER := 2500.0
+const GRAVITY := 100.0
 
 # Public state
 export(int, 0, 1) var player_index := 0
@@ -28,7 +28,7 @@ func _ready():
 		if child is MeshInstance:
 			child.set_surface_material(0, material)
 
-	material.albedo_color = [Color.red, Color.blue][player_index]
+	material.albedo_color = [Color(0.607843, 0.47451, 0.313726), Color(0.356863, 0.662745, 0.513726)][player_index]
 
 func _process(delta: float):
 	if _is_dead:
@@ -41,11 +41,10 @@ func _process(delta: float):
 	_velocity += dir * SPEED
 	_on_ground = _floor_raycast.is_colliding()
 
+	var sand = GameState.get_sand_system()
+
 	# Picking up
-	if Input.is_action_just_pressed("action_Player" + str(player_index+1)):
-
-		var sand = GameState.get_sand_system()
-
+	if Input.is_action_just_pressed("action_pickup_Player" + str(player_index+1)):
 		if not _carried_block:
 			var sand_info = sand.extract_sand(translation - Vector3(0.0, 1.0, 0.0))
 
@@ -59,14 +58,15 @@ func _process(delta: float):
 				_carried_block.get_parent_spatial().remove_child(_carried_block)
 				_carried_block.translation = Vector3(0.0, 3.0, 0.0)
 				add_child(_carried_block)
-		else:
-			var in_front = global_transform.origin + Vector3(0.0, 0.5, 0.0) - _meshes.transform.basis.z
+
+	if Input.is_action_just_pressed("action_place_Player" + str(player_index+1)):
+		if _carried_block:
+			var in_front = global_transform.origin + Vector3(0.0, 10.0, 0.0) - _meshes.transform.basis.z
 			if sand.add_sand(in_front, _carried_block_info):
 				_carried_block.queue_free()
 				_carried_block = null
+	#$DebugLabel.text = "ground? " + str(_on_ground)
 
-
-	# $DebugLabel.text = "ground? " + str(_on_ground)
 
 	# "Physics"
 	if _on_ground:
