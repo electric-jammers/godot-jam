@@ -7,12 +7,12 @@
 [ext_resource path="res://Scenes/MainScene.gd" type="Script" id=5]
 [ext_resource path="res://Scenes/SkySphere.gd" type="Script" id=6]
 
-[sub_resource type="SphereMesh" id=2]
+[sub_resource type="SphereMesh" id=1]
 flip_faces = true
-radius = 300.0
-height = 600.0
+radius = 150.0
+height = 300.0
 
-[sub_resource type="ShaderMaterial" id=1]
+[sub_resource type="ShaderMaterial" id=2]
 shader = ExtResource( 2 )
 shader_param/dayNightValue = 1.0
 
@@ -20,12 +20,12 @@ shader_param/dayNightValue = 1.0
 script = ExtResource( 5 )
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 0.947182, 0.131649, -0.292428, 0, 0.911855, 0.410512, 0.320696, -0.38883, 0.863693, -5.25518, 9.61406, 19.2241 )
+transform = Transform( 1, 0, 0, 0, 0.766044, 0.642788, 0, -0.642788, 0.766044, 0, 50, 65 )
 far = 8000.0
 
 [node name="SkySphere" type="MeshInstance" parent="."]
-mesh = SubResource( 2 )
-material/0 = SubResource( 1 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 2 )
 script = ExtResource( 6 )
 
 [node name="SandSystem" parent="." instance=ExtResource( 1 )]

@@ -7,9 +7,9 @@ var health := PoolByteArray()
 
 var size_x : int = 100
 var size_y : int = 100
-var size_z : int = 100
+var size_z : int = 75
 
-var root_position = Vector3(50, 0, 50)
+var root_position = Vector3(50, 0, 35)
 
 enum SandType {
 	NONE,
