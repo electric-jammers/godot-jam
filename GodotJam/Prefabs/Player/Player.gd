@@ -1,37 +1,54 @@
 extends KinematicBody
 
+# Subnode
+onready var _meshes = $Mesh as Spatial
+onready var _floor_raycast = $FloorCast as RayCast
 
-# Declare member variables here. Examples:
-# var a: int = 2
-# var b: String = "text"
+# Consts
+const AIR_FRICTION := 0.02
+const GROUND_FRICTION := 0.05
+const SPEED := 40.0
+const JUMP_POWER := 800.0
+const GRAVITY := 25.0
+
+# Public state
+export(int, 0, 1) var player_index := 0
+
+# Private state
 var _velocity := Vector3()
+var _on_ground := false
 
-var _airFriction := 0.02
-var _groundFriction := 0.05
-var _speed := 500
-var _gravity := 500
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-
+func _process(delta: float):
+	# Input
 	var dir := Vector3()
+	dir.x = Input.get_action_strength("move_+X_Player" + str(player_index+1)) - Input.get_action_strength("move_-X_Player" + str(player_index+1))
+	dir.z = Input.get_action_strength("move_+Y_Player" + str(player_index+1)) - Input.get_action_strength("move_-Y_Player" + str(player_index+1))
 
-	dir.x = Input.get_action_strength("move_+X_Player1") - Input.get_action_strength("move_-X_Player1")
+	_velocity += dir * SPEED
+	_on_ground = _floor_raycast.is_colliding()
 
-	dir.z = Input.get_action_strength("move_+Y_Player1") - Input.get_action_strength("move_-Y_Player1")
+	$DebugLabel.text = "ground? " + str(_on_ground)
 
-	if(is_on_floor())
-		_velocity *= 1.0 - _groundFriction
-	else
-		_velocity *= 1.0 - _airFriction
-		_velocity += _gravity * delta
+	# "Physics"
+	if _on_ground:
+		if Input.is_action_just_pressed("jump_Player" + str(player_index+1)):
+			_velocity.y += JUMP_POWER
 
+		_velocity *= 1.0 - GROUND_FRICTION
+	else:
+		_velocity *= 1.0 - AIR_FRICTION
+		_velocity += Vector3(0.0, -GRAVITY, 0.0)
 
-	move_and_slide(_velocity)
+	move_and_slide(_velocity * delta)
 
+	# Facing
+	if _velocity.length_squared() > 100.0:
+		var ground_velocity = _velocity
+		ground_velocity.y = 0.0
 
+		var new_basis := Basis()
+		new_basis.y = Vector3.UP
+		new_basis.z = ground_velocity.normalized()
+		new_basis.x = new_basis.z.cross(new_basis.y).normalized()
+
+		_meshes.transform.basis = new_basis
