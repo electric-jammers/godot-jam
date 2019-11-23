@@ -59,3 +59,8 @@ omni_range = 36.6374
 
 [node name="EndGameOverlay" parent="." instance=ExtResource( 8 )]
 modulate = Color( 1, 1, 1, 0 )
+
+[node name="OmniLight3" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 18.0197, 13.2109, -0.979009 )
+light_color = Color( 1, 0.988235, 0.901961, 1 )
+omni_range = 35.1303
