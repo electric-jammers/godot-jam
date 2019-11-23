@@ -69,5 +69,4 @@ func get_sand_system() -> SandSystem:
 	return _sand_system
 
 func report_player_death(player_index: int):
-	print("AAAAAAAAAH Player Died: " + str(player_index))
 	emit_signal("player_died", player_index)
