@@ -89,19 +89,30 @@ func damage_all_sand_up_to_height(max_height: int, damage_amount: int) -> void:
 				var postition_index := internal_ints_to_index(x, height, z)
 				internal_damage_sand(postition_index, damage_amount)
 
-func add_sand(position: Vector3, type_of_sand: int) -> void:
+func add_sand(position: Vector3, type_of_sand: int) -> bool:
 	if type_of_sand == SandType.NONE:
 		print("Trying to add sand outside of the sand bounds!")
-		return
+		return false
 
 	var position_index := position_to_index(position)
 	if position_index < 0 or position_index >= sand_voxels.size():
 		print("Trying to add sand outside of the sand bounds!")
-		return
+		return false
 
 	if sand_voxels[position_index] != SandType.NONE:
 		print("Replacing sand that is already there!")
 		internal_remove_sand(position_index)
+		return false
+
+	# make sure that the sand is stacked on top of other sand!
+	var next_position_to_check := position
+	while int(next_position_to_check.y) > 0:
+		next_position_to_check.y = next_position_to_check.y - 1
+		var next_position_index_to_check := position_to_index(next_position_to_check)
+		if sand_voxels[next_position_index_to_check] != SandType.NONE:
+			break
+		position_index = next_position_index_to_check
+		position = next_position_to_check
 
 	var cube : Spatial
 	var initial_health = 10
@@ -121,6 +132,7 @@ func add_sand(position: Vector3, type_of_sand: int) -> void:
 	add_child(cube)
 	cube_spatial_dict[position_index] = cube
 	cube.translation = index_to_world_position(position_index)
+	return true
 
 
 func remove_sand(position: Vector3) -> void:
