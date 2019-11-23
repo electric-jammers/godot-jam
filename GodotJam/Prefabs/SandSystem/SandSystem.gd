@@ -103,36 +103,33 @@ func remove_sand(position: Vector3) -> void:
 	var position_index := position_to_index(position)
 	internal_remove_sand(position_index)
 
+func extract_sand(position: Vector3) -> Array:
+	var position_index := position_to_index(position)
+	return internal_extract_sand(position_index)
+
 func internal_remove_sand(position_index: int) -> void:
+	var sand_object := internal_extract_sand(position_index)
+	if sand_object.size() > 0:
+		sand_object[0].queue_free()
+
+func internal_extract_sand(position_index: int) -> Array:
 	if position_index < 0 or position_index >= sand_voxels.size():
 		print("Trying to remove sand outside of the sand bounds!")
-		return
+		return []
+
+	var sand_type := sand_voxels[position_index]
+	if sand_type == SandType.NONE:
+		print("No sand to extract here!")
+		return []
 
 	sand_voxels[position_index] =  SandType.NONE
 	if cube_spatial_dict.has(position_index):
 		var cube : Spatial = cube_spatial_dict[position_index]
-		cube.queue_free()
 		cube_spatial_dict.erase(position_index)
-
 		locations_to_drop.append(position_index)
+		return [cube, sand_type]
 
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	sand_voxels.resize(size_x * size_y * size_z)
-	health.resize(size_x * size_y * size_z)
-	for index in sand_voxels.size():
-		sand_voxels.set(index, SandType.NONE)
-		health.set(index, 0)
-
-	for z in size_z:
-		for x in size_x:
-			add_sand(Vector3(x, 0, z) - root_position, SandType.HARD_SAND)
-			add_sand(Vector3(x, 1, z) - root_position, SandType.HARD_SAND)
-			add_sand(Vector3(x, 2, z) - root_position, SandType.SOFT_SAND)
-			add_sand(Vector3(x, 3, z) - root_position, SandType.SOFT_SAND)
-
+	return []
 
 func drop_sand() -> void:
 	for location_to_drop in locations_to_drop:
@@ -164,6 +161,20 @@ func drop_sand() -> void:
 
 	locations_to_drop.empty()
 
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	sand_voxels.resize(size_x * size_y * size_z)
+	health.resize(size_x * size_y * size_z)
+	for index in sand_voxels.size():
+		sand_voxels.set(index, SandType.NONE)
+		health.set(index, 0)
+
+	for z in size_z:
+		for x in size_x:
+			add_sand(Vector3(x, 0, z) - root_position, SandType.HARD_SAND)
+			add_sand(Vector3(x, 1, z) - root_position, SandType.HARD_SAND)
+			add_sand(Vector3(x, 2, z) - root_position, SandType.SOFT_SAND)
+			add_sand(Vector3(x, 3, z) - root_position, SandType.SOFT_SAND)
 
 func _process(delta: float) -> void:
 	call_deferred("drop_sand")
