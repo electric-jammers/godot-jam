@@ -11,5 +11,5 @@ dest_files=[ "res://.import/Drowning08.ogg-8dd54ad959c1cb7b0042953be30fa90b.oggs
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0
