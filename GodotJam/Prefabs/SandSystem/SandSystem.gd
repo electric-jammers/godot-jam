@@ -194,8 +194,9 @@ func drop_sand() -> void:
 				cube_spatial_dict.erase(index)
 
 				cube_spatial_dict[below_index].translation = index_to_world_position(below_index)
+				index = below_index
 
-	locations_to_drop.empty()
+	locations_to_drop.clear()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
