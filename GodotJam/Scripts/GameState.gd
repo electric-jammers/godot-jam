@@ -26,11 +26,11 @@ var _water_system: WaterPlane
 # 0 = noon, 0.5 = midnight, 1 = noon
 func get_normalized_day_night_cycle_time() -> float:
 	var result : float
-	if stage == GameStage.DAY:
+	if stage == GameStage.NIGHT:
 		result = 0.75 + (get_normalized_stage_time()/2)
 		if result > 1.0:
 			result = result - 1.0
-	elif stage == GameStage.NIGHT:
+	elif stage == GameStage.DAY:
 		result = 0.25 + (get_normalized_stage_time()/2)
 	else:
 		result =  0.0

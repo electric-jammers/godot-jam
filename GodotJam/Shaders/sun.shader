@@ -3,11 +3,12 @@ render_mode unshaded;
 
 uniform float dayNightValue;
 uniform float colMultiplier = 1.0;
+uniform float horizon = 0.83;
 uniform sampler2D texSampler;
 
 void fragment()
 {
-	if ((SCREEN_UV.y) < 0.6)
+	if ((SCREEN_UV.y) < horizon)
 	{
 		discard;
 	}
