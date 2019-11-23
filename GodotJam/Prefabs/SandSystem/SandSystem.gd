@@ -5,11 +5,11 @@ class_name SandSystem
 var sand_voxels :=  PoolByteArray ()
 var health := PoolByteArray()
 
-var size_x : int = 100
-var size_y : int = 100
-var size_z : int = 75
+var size_x : int = 50
+var size_y : int = 50
+var size_z : int = 30
 
-var root_position = Vector3(50, 0, 35)
+var root_position = Vector3(25, 0, 15)
 
 enum SandType {
 	NONE,
@@ -200,6 +200,11 @@ func _ready() -> void:
 			add_sand(Vector3(x, 2, z) - root_position, SandType.HARD_SAND)
 			add_sand(Vector3(x, 3, z) - root_position, SandType.SOFT_SAND)
 			add_sand(Vector3(x, 4, z) - root_position, SandType.SOFT_SAND)
+
+	GameState._sand_system = self
+
+func _exit_tree():
+	GameState._sand_system = null
 
 func _process(delta: float) -> void:
 	call_deferred("drop_sand")

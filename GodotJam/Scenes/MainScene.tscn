@@ -10,8 +10,8 @@
 
 [sub_resource type="SphereMesh" id=1]
 flip_faces = true
-radius = 150.0
-height = 300.0
+radius = 80.0
+height = 160.0
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = ExtResource( 2 )
@@ -21,7 +21,8 @@ shader_param/dayNightValue = 1.0
 script = ExtResource( 5 )
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.766044, 0.642788, 0, -0.642788, 0.766044, 0, 50, 65 )
+transform = Transform( 1, 0, 0, 0, 0.819152, 0.573577, 0, -0.573577, 0.819152, 0, 25, 33 )
+fov = 50.0
 far = 8000.0
 
 [node name="SkySphere" type="MeshInstance" parent="."]
@@ -37,8 +38,8 @@ script = ExtResource( 6 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0 )
 
 [node name="KinematicBody" parent="." instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 26.4505, 12.4344, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 14.4505, 12.4344, 0 )
 
 [node name="KinematicBody2" parent="." instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -36.4934, 9.77155, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.4934, 14.7716, 0 )
 player_index = 1

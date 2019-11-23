@@ -18,6 +18,8 @@ export(int, 0, 1) var player_index := 0
 var _velocity := Vector3()
 var _on_ground := false
 
+var _carried_block: Spatial
+
 func _process(delta: float):
 	# Input
 	var dir := Vector3()
@@ -26,6 +28,31 @@ func _process(delta: float):
 
 	_velocity += dir * SPEED
 	_on_ground = _floor_raycast.is_colliding()
+
+	# Picking up
+	if Input.is_action_just_pressed("action_Player" + str(player_index+1)):
+		if not _carried_block:
+			var ss = GameState.get_sand_system()
+			var sandy = ss.extract_sand(translation - Vector3(0.0, 1.0, 0.0))
+
+			if sandy.size() > 0:
+				var node = sandy[0]
+				var type = sandy[1]
+
+				_carried_block = node
+
+				var block_collision = _carried_block.get_node("CollisionShape") as CollisionShape
+				block_collision.disabled = true
+
+				_carried_block.get_parent_spatial().remove_child(_carried_block)
+				_carried_block.translation = Vector3(0.0, 3.0, 0.0)
+				add_child(_carried_block)
+		else:
+			#TODO: place in front
+
+			_carried_block.queue_free()
+			_carried_block = null
+
 
 	$DebugLabel.text = "ground? " + str(_on_ground)
 

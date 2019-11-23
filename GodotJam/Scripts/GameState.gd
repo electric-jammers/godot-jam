@@ -17,6 +17,8 @@ var time_in_stage := 0.0
 
 var stage = GameStage.FRONTEND
 
+var _sand_system: SandSystem
+
 # 0 = noon, 0.5 = midnight, 1 = noon
 func get_normalized_stage_time():
 	return time_in_stage / STAGE_LEN
@@ -35,4 +37,4 @@ func enter_stage(new_game_stage):
 	time_in_stage = 0.0
 
 func get_sand_system() -> SandSystem:
-	return get_tree().root.get_node("SandSystem") as SandSystem
+	return _sand_system
