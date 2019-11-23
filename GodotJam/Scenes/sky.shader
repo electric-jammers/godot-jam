@@ -1,4 +1,5 @@
 shader_type spatial;
+render_mode unshaded;
 
 uniform float dayNightValue = 1.0; // 0 = day, 1 = night
 
