@@ -21,7 +21,7 @@ shader_param/dayNightValue = 1.0
 script = ExtResource( 5 )
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.875228, 0.483711, 0, -0.483711, 0.875228, -0.748412, 29.122, 37.691 )
+transform = Transform( 1, 0, 0, 0, 0.875228, 0.483711, 0, -0.483711, 0.875228, 0, 20, 25 )
 fov = 50.0
 far = 8000.0
 
@@ -40,10 +40,10 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.528368, -27.6826, -25.7795 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0 )
 
 [node name="KinematicBody" parent="." instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 14.4505, 12.4344, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 13, 0 )
 
 [node name="KinematicBody2" parent="." instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -22.4934, 14.7716, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 13, 0 )
 player_index = 1
 
 [node name="OmniLight" type="OmniLight" parent="."]
