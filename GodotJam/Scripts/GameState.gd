@@ -40,6 +40,8 @@ func get_normalized_stage_time() -> float:
 	return time_in_stage / STAGE_LEN
 
 func _process(delta: float):
+	if _water_system == null:
+		return
 	current_time += delta
 	time_in_stage += delta
 	if get_normalized_stage_time() > 1.0:
