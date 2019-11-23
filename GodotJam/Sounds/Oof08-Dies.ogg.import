@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Oof08-Dies.ogg-2fac78dd8e1fd364bbb7b124aeab092a.oggstr"
+
+[deps]
+
+source_file="res://Sounds/Oof08-Dies.ogg"
+dest_files=[ "res://.import/Oof08-Dies.ogg-2fac78dd8e1fd364bbb7b124aeab092a.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

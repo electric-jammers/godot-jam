@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Duck03.ogg-3fe543fdfb4e5a87fd361128bd869286.oggstr"
+
+[deps]
+
+source_file="res://Sounds/Duck03.ogg"
+dest_files=[ "res://.import/Duck03.ogg-3fe543fdfb4e5a87fd361128bd869286.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
