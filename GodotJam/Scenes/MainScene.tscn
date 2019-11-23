@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
+[ext_resource path="res://Prefabs/SandSystem/SandSystem.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/sky.shader" type="Shader" id=2]
 
 [sub_resource type="ShaderMaterial" id=1]
@@ -15,9 +16,11 @@ height = 600.0
 [node name="Spatial" type="Spatial"]
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.11291 )
+transform = Transform( 0.947182, 0.131649, -0.292428, 0, 0.911855, 0.410512, 0.320696, -0.38883, 0.863693, -5.25518, 9.61406, 19.2241 )
 far = 8000.0
 
 [node name="SkySphere" type="MeshInstance" parent="."]
 mesh = SubResource( 2 )
 material/0 = null
+
+[node name="SandSystem" parent="." instance=ExtResource( 1 )]
