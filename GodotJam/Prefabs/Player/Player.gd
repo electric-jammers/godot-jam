@@ -62,18 +62,22 @@ func _process(delta: float):
 			new_block.translation = Vector3(0.0, _carried_blocks.size() * 1.0 + 2.0, 0.0)
 			add_child(new_block)
 
+			$SandSoundPlayer.play()
+
 	if Input.is_action_just_pressed("action_place_Player" + str(player_index+1)):
 		if not _carried_blocks.empty():
 			var in_front = action_location + Vector3(0.0, 10.0, 0.0)
 			if sand.add_sand(in_front, _carried_blocks_info.back()):
 				_carried_blocks.pop_back().queue_free()
 				_carried_blocks_info.pop_back()
+				$SandSoundPlayer.play()
 
 
 	# "Physics"
 	if _on_ground:
 		if Input.is_action_just_pressed("jump_Player" + str(player_index+1)):
 			_velocity.y += JUMP_POWER
+			$JumpSoundPlayer.play()
 
 		_velocity *= 1.0 - GROUND_FRICTION
 	else:
