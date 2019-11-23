@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Textures/sandcastle_mini.jpg" type="Texture" id=1]
 [ext_resource path="res://Scenes/MainMenu.gd" type="Script" id=2]
+[ext_resource path="res://Prefabs/ButtonWithSound/ButtonWithSound.tscn" type="PackedScene" id=3]
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -32,13 +33,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="StartButton" type="Button" parent="VBoxContainer"]
+[node name="StartButton" parent="VBoxContainer" instance=ExtResource( 3 )]
 margin_top = 275.0
 margin_right = 204.0
 margin_bottom = 295.0
 text = "Start Game"
 
-[node name="QuitButton" type="Button" parent="VBoxContainer"]
+[node name="QuitButton" parent="VBoxContainer" instance=ExtResource( 3 )]
 margin_top = 305.0
 margin_right = 204.0
 margin_bottom = 325.0
