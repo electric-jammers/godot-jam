@@ -10,7 +10,7 @@ enum GameStage {
 	NIGHT
 }
 
-const STAGE_LEN = 30.0
+const STAGE_LEN := 30.0
 
 var current_time := 0.0
 var time_in_stage := 0.0
