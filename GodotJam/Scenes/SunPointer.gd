@@ -20,5 +20,5 @@ func _process(delta):
 		light_energy = pow(lerp(0.0, initialLightEnergy, 1.0 - abs(stageTime - 0.5) * 2.0), 0.2);
 		shadow_enabled = true
 
-	if isSun:
-		print(String(light_energy))
+	#if isSun:
+#		print(String(light_energy))
