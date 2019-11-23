@@ -18,6 +18,7 @@ enum SandType {
 }
 
 var cube_spatial_dict = {}
+var locations_to_drop = []
 
 onready var soft_sand_prefab = load("res://Prefabs/SandSystem/SoftSand.tscn")
 onready var hard_sand_prefab = load("res://Prefabs/SandSystem/HardSand.tscn")
@@ -113,6 +114,9 @@ func internal_remove_sand(position_index: int) -> void:
 		cube.queue_free()
 		cube_spatial_dict.erase(position_index)
 
+		locations_to_drop.append(position_index)
+
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -128,6 +132,42 @@ func _ready() -> void:
 			add_sand(Vector3(x, 1, z) - root_position, SandType.HARD_SAND)
 			add_sand(Vector3(x, 2, z) - root_position, SandType.SOFT_SAND)
 			add_sand(Vector3(x, 3, z) - root_position, SandType.SOFT_SAND)
+
+
+func drop_sand() -> void:
+	for location_to_drop in locations_to_drop:
+		var y_lowest :int= location_to_drop / (size_x * size_z)
+		var z :int= (location_to_drop - (y_lowest * size_x * size_z)) / size_x
+		var x :int= location_to_drop - ((y_lowest * size_x * size_z) + (z * size_x))
+
+		for y in range(y_lowest, size_y):
+			var index : int = internal_ints_to_index(x, y, z)
+
+			if sand_voxels[index] == SandType.NONE:
+				continue
+
+			for y_below in range(y - 1, y_lowest - 1, -1):
+				if y_lowest < 0:
+					continue
+				var below_index := internal_ints_to_index(x, y_below, z)
+				if sand_voxels[below_index] != SandType.NONE:
+					break
+
+				sand_voxels[below_index] = sand_voxels[index]
+				health[below_index] = health[index]
+				cube_spatial_dict[below_index] = cube_spatial_dict[index]
+				sand_voxels[index] = SandType.NONE
+				health[index] = 0
+				cube_spatial_dict.erase(index)
+
+				cube_spatial_dict[below_index].translation = index_to_world_position(below_index)
+
+	locations_to_drop.empty()
+
+
+func _process(delta: float) -> void:
+	call_deferred("drop_sand")
+
 
 
 
