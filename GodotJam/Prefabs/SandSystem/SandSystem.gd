@@ -9,7 +9,7 @@ var size_x : int = 26
 var size_y : int = 16
 var size_z : int = 16
 
-var root_position = Vector3(13, 0, 8)
+var root_position = Vector3(12.5, 0, 7.5)
 
 enum SandType {
 	NONE,
