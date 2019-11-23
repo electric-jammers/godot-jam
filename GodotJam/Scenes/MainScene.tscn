@@ -47,11 +47,11 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 13, 0 )
 player_index = 1
 
 [node name="OmniLight" type="OmniLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.38251, 16.5317, 11.354 )
-light_energy = 0.5
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.32298, 14.4945, 12.3434 )
+light_energy = 0.8
 omni_range = 33.6244
 
 [node name="OmniLight2" type="OmniLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -7.52238, 16.5317, -14.9252 )
-light_energy = 0.5
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15.5922, 7.69209, -4.90987 )
+light_energy = 0.9
 omni_range = 36.6374

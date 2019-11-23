@@ -28,7 +28,7 @@ func _ready():
 		if child is MeshInstance:
 			child.set_surface_material(0, material)
 
-	material.albedo_color = [Color(0.607843, 0.47451, 0.313726), Color(0.356863, 0.662745, 0.513726)][player_index]
+	material.albedo_color = [Color(0.698039, 0.364706, 0.27451), Color(0.356863, 0.662745, 0.513726)][player_index]
 
 func _process(delta: float):
 	if _is_dead:
