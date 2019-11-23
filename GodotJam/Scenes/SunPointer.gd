@@ -4,8 +4,6 @@ export var isSun = true
 
 var initialLightEnergy = 1.0;
 
-var i = 0;
-
 func _ready():
 	initialLightEnergy = light_energy;
 
@@ -16,7 +14,3 @@ func _process(delta):
 		light_energy = 0.0
 	else:
 		light_energy = initialLightEnergy
-	i = i + 1
-	if i > 10:
-		print("sun: " + String(isSun) + ", light_energy: " + String(light_energy))
-		i = 0
