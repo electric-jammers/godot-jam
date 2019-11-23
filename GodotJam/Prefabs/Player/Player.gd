@@ -44,7 +44,7 @@ func _process(delta: float):
 	var sand = GameState.get_sand_system()
 
 	# Picking up
-	var action_location := translation - Vector3(0.0, 1.0, 0.0)
+	var action_location : Vector3 = translation - Vector3(0.0, 1.0, 0.0) + (_meshes.transform.basis.z * 2.0)
 	sand.draw_dummy(action_location, player_index)
 	if Input.is_action_just_pressed("action_pickup_Player" + str(player_index+1)):
 		var sand_info = sand.extract_sand(action_location)
