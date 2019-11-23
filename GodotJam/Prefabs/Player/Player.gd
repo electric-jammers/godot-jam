@@ -43,6 +43,7 @@ func _process(delta: float):
 
 	# Picking up
 	if Input.is_action_just_pressed("action_Player" + str(player_index+1)):
+
 		var sand = GameState.get_sand_system()
 
 		if not _carried_block:
@@ -65,7 +66,7 @@ func _process(delta: float):
 				_carried_block = null
 
 
-	$DebugLabel.text = "ground? " + str(_on_ground)
+	# $DebugLabel.text = "ground? " + str(_on_ground)
 
 	# "Physics"
 	if _on_ground:
@@ -92,5 +93,6 @@ func _process(delta: float):
 		_meshes.transform.basis = new_basis
 
 	if translation.y < -4:
+		$DrownSoundPlayer.play()
 		GameState.report_player_death(player_index)
 		_is_dead = true

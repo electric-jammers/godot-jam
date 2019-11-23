@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Drowning04.ogg-c6b68889876ce4d397cbde1960ceca8e.oggstr"
+
+[deps]
+
+source_file="res://Sounds/Drowning04.ogg"
+dest_files=[ "res://.import/Drowning04.ogg-c6b68889876ce4d397cbde1960ceca8e.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Drowning08.ogg-8dd54ad959c1cb7b0042953be30fa90b.oggstr"
+
+[deps]
+
+source_file="res://Sounds/Drowning08.ogg"
+dest_files=[ "res://.import/Drowning08.ogg-8dd54ad959c1cb7b0042953be30fa90b.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
