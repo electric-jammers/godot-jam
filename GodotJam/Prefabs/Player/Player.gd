@@ -92,5 +92,6 @@ func _process(delta: float):
 		_meshes.transform.basis = new_basis
 
 	if translation.y < -4:
+		$DrownSoundPlayer.play()
 		GameState.report_player_death(player_index)
 		_is_dead = true

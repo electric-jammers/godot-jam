@@ -1,7 +1,16 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Prefabs/Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Materials/CharacterSkin.tres" type="Material" id=2]
+[ext_resource path="res://Prefabs/RandomizedStreamPlayer/RandomizedStreamPlayer.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Sounds/Drowning03.ogg" type="AudioStream" id=4]
+[ext_resource path="res://Sounds/Drowning06.ogg" type="AudioStream" id=5]
+[ext_resource path="res://Sounds/Drowning07.ogg" type="AudioStream" id=6]
+[ext_resource path="res://Sounds/Drowning08.ogg" type="AudioStream" id=7]
+[ext_resource path="res://Sounds/Drowning02.ogg" type="AudioStream" id=8]
+[ext_resource path="res://Sounds/Drowning04.ogg" type="AudioStream" id=9]
+[ext_resource path="res://Sounds/Drowning05.ogg" type="AudioStream" id=10]
+[ext_resource path="res://Sounds/Drowning01.ogg" type="AudioStream" id=11]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.4
@@ -40,3 +49,6 @@ __meta__ = {
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.254625, 0 )
 enabled = true
 cast_to = Vector3( 0, -0.5, 0 )
+
+[node name="DrownSoundPlayer" parent="." instance=ExtResource( 3 )]
+stream_array = [ ExtResource( 11 ), ExtResource( 8 ), ExtResource( 4 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ) ]
