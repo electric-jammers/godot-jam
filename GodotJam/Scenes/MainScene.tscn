@@ -39,11 +39,11 @@ transform = Transform( 1, 0, 0, 0, 0.943582, 0.33114, 0, -0.33114, 0.943582, -0.
 [node name="WaterAnchor" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0 )
 
-[node name="KinematicBody" parent="." instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 13, 0 )
-
 [node name="KinematicBody2" parent="." instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 13, 0 )
+
+[node name="KinematicBody" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 13, 0 )
 player_index = 1
 
 [node name="OmniLight" type="OmniLight" parent="."]
