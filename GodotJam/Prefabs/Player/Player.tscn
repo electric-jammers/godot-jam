@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Prefabs/Player/Player.gd" type="Script" id=1]
+[ext_resource path="res://Materials/CharacterSkin.tres" type="Material" id=2]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.4
@@ -21,12 +22,12 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.412211, 0 )
 [node name="MeshInstance" type="MeshInstance" parent="Mesh"]
 transform = Transform( 0.5, 0, 0, 0, -2.18557e-08, 0.5, 0, -0.5, -2.18557e-08, 0, 1.42656, 0 )
 mesh = SubResource( 2 )
-material/0 = null
+material/0 = ExtResource( 2 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="Mesh"]
 transform = Transform( 0.25, 0, 0, 0, -0.24945, -0.0165685, 0, 0.0165685, -0.24945, 0, 1.69482, 0.689724 )
 mesh = SubResource( 2 )
-material/0 = null
+material/0 = ExtResource( 2 )
 
 [node name="DebugLabel" type="Label" parent="."]
 margin_right = 40.0
@@ -36,14 +37,6 @@ __meta__ = {
 }
 
 [node name="FloorCast" type="RayCast" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.187377, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.254625, 0 )
 enabled = true
 cast_to = Vector3( 0, -0.5, 0 )
-
-[node name="SpotLight" type="SpotLight" parent="."]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.370644, 1.20338, 1.23382 )
-light_energy = 5.0
-light_bake_mode = 0
-shadow_enabled = true
-spot_range = 2.1
-spot_angle = 23.7
