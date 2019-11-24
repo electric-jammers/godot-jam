@@ -5,8 +5,15 @@ onready var _meshes := $Mesh as Spatial
 onready var _shovel := $ShovelAnimationPlayer as AnimationPlayer
 onready var _floor_raycast := $FloorCast as RayCast
 onready var _dash_timer := $DashTimer as Timer
+
 onready var _winner_cam_parent := $CamParent as Spatial
 onready var _winner_cam := $CamParent/Camera as Camera
+
+onready var _walking_particles = $Mesh/Particles/Walking
+onready var _sand_particles = $Mesh/Particles/Sand
+onready var _bubble_particles = $Mesh/Particles/Bubbles
+onready var _step_timer := $StepTimer as Timer
+onready var _pickup_recently_timer := $PickupTimer as Timer
 
 # Consts
 const AIR_FRICTION := 0.25
@@ -15,7 +22,7 @@ const GROUND_FRICTION := 0.3
 const SPEED := 200.0
 
 const DASH_POWER := 4000.0
-const STEP_POWER := 1500.0
+const STEP_POWER := 1800.0
 const JUMP_POWER := 3000.0
 
 const GRAVITY := 100.0
@@ -61,16 +68,7 @@ func _process(delta: float):
 	var sand = GameState.get_sand_system()
 
 	# Picking up
-	var half_block = Vector3(SandSystem.BLOCK_SIZE, 0.0, SandSystem.BLOCK_SIZE) * 0.5
-	var under_me = translation - Vector3(0.0, SandSystem.BLOCK_SIZE, 0.0)
-	var facing_dir = _meshes.transform.basis.z
-
-	if abs(facing_dir.x) > abs(facing_dir.z):
-		facing_dir.z = 0
-	else:
-		facing_dir.x = 0
-
-	var action_location: Vector3 = under_me + (facing_dir * SandSystem.BLOCK_SIZE) + half_block
+	var action_location: Vector3 = _get_pickup_action_location()
 	sand.draw_dummy(action_location, player_index)
 
 	if Input.is_action_just_pressed("action_pickup_Player" + str(player_index+1)):
@@ -89,8 +87,10 @@ func _process(delta: float):
 			new_block.translation = Vector3(0.0, _carried_blocks.size() * (0.1 + SandSystem.BLOCK_SIZE) + 2.0, 0.0)
 			add_child(new_block)
 
+			_pickup_recently_timer.start()
+
 			$SandSoundPlayer.play()
-			$Mesh/Particles/Sand.emitting = true
+			_sand_particles.emitting = true
 			_shovel.stop(true)
 			_shovel.play("ShovelAnim")
 
@@ -102,7 +102,8 @@ func _process(delta: float):
 				_carried_blocks.pop_back().queue_free()
 				_carried_blocks_info.pop_back()
 				$SandSoundPlayer.play()
-				$Mesh/Particles/Sand.emitting = true
+				_sand_particles.emitting = true
+
 				_is_animating_shovel = true
 
 	# "Physics"
@@ -116,13 +117,27 @@ func _process(delta: float):
 		_velocity *= Vector3(1.0 - AIR_FRICTION, 1.0, 1.0 - AIR_FRICTION)
 		_velocity += Vector3(0.0, -GRAVITY, 0.0)
 
-	move_and_slide(_velocity * min(delta, 0.3))
+	var new_velocity := move_and_slide(_velocity * min(delta, 0.3))
+	var horizontal_velocity := Vector2(new_velocity.x, new_velocity.z)
 
-	var slide_coll: KinematicCollision = get_slide_collision(0)
-	if player_index == 0 and slide_coll != null:
-		var sand_height_here = GameState.get_sand_system().get_sand_height(Vector2(translation.x, translation.z))
-		var sand_height_there = GameState.get_sand_system().get_sand_height(Vector2(slide_coll.position.x, slide_coll.position.z))
-		$Mesh/DebugLabel.text = "Hop: " + str(sand_height_here) + " -> " + str(sand_height_there)
+	if horizontal_velocity.length_squared() > 0.5 and abs(new_velocity.y) < 0.0001:
+		_walking_particles.emitting = true
+
+	# Detect walls and hop up (only if not hopped or collected recently)
+	if _step_timer.time_left <= 0.0 and _pickup_recently_timer.time_left <= 0.0:
+		for slide_index in get_slide_count():
+			var slide_coll: KinematicCollision = get_slide_collision(slide_index )
+
+			var sand_height_here = GameState.get_sand_system().get_sand_height(translation + Vector3(SandSystem.BLOCK_SIZE, 0.0, SandSystem.BLOCK_SIZE) * 0.5)
+			var sand_height_there = GameState.get_sand_system().get_sand_height(_get_pickup_action_location())
+
+			if player_index == 0:
+				$Mesh/DebugLabel.text = "Hop: " + str(sand_height_here) + " -> " + str(sand_height_there)
+
+			if sand_height_there == sand_height_here + 1:
+				_velocity.y += STEP_POWER
+				_step_timer.start()
+				break
 
 	# Dash
 	if _dash_timer.time_left <= 0.0 and Input.is_action_just_pressed("dash_Player" + str(player_index+1)):
@@ -144,7 +159,7 @@ func _process(delta: float):
 		if look_dir.length_squared() > 0.5 * 0.5:
 			_face_dir(look_dir)
 
-	# Death by falling
+	# Death by drowning
 	if translation.y < -4:
 		$DrownSoundPlayer.play()
 		GameState.report_player_death(player_index)
@@ -152,6 +167,21 @@ func _process(delta: float):
 			_carried_blocks.pop_back().queue_free()
 			_carried_blocks_info.pop_back()
 		_is_dead = true
+		_bubble_particles.emitting = true
+
+func _get_pickup_action_location() -> Vector3:
+	var half_block = Vector3(SandSystem.BLOCK_SIZE, 0.0, SandSystem.BLOCK_SIZE) * 0.5
+	var under_me = translation #- Vector3(0.0, SandSystem.BLOCK_SIZE, 0.0)
+	var facing_dir = _meshes.transform.basis.z
+
+	if abs(facing_dir.x) > abs(facing_dir.z):
+		facing_dir.z = 0
+	else:
+		facing_dir.x = 0
+
+	var action_location: Vector3 = under_me + (facing_dir * SandSystem.BLOCK_SIZE) + half_block
+	return action_location
+
 
 
 func _face_dir(dir: Vector3):
