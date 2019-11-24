@@ -23,13 +23,14 @@
 [ext_resource path="res://Sounds/Oof04.ogg" type="AudioStream" id=21]
 [ext_resource path="res://Sounds/Sand02.ogg" type="AudioStream" id=22]
 [ext_resource path="res://Sounds/Sand01.ogg" type="AudioStream" id=23]
-[ext_resource path="res://Prefabs/BubblesParticles/BubblesParticles.tscn" type="PackedScene" id=24]
+[ext_resource path="res://Prefabs/Player/Shadow.gd" type="Script" id=24]
 [ext_resource path="res://Sounds/Oof02.ogg" type="AudioStream" id=25]
 [ext_resource path="res://Sounds/Sand05.ogg" type="AudioStream" id=26]
 [ext_resource path="res://Sounds/Oof03.ogg" type="AudioStream" id=27]
 [ext_resource path="res://Materials/PlayerShadow.tres" type="Material" id=28]
 [ext_resource path="res://Prefabs/SandParticles/SandParticles.tscn" type="PackedScene" id=29]
 [ext_resource path="res://Meshes/shovel.glb" type="PackedScene" id=30]
+[ext_resource path="res://Prefabs/BubblesParticles/BubblesParticles.tscn" type="PackedScene" id=31]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.4
@@ -97,6 +98,7 @@ width = 4.0
 height = 10.0
 depth = 4.0
 material = ExtResource( 28 )
+script = ExtResource( 24 )
 
 [node name="DebugLabel" type="Label" parent="Mesh"]
 margin_right = 40.0
@@ -115,7 +117,7 @@ amount = 10
 [node name="Sand" parent="Mesh/Particles" instance=ExtResource( 29 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2 )
 
-[node name="Bubbles" parent="Mesh/Particles" instance=ExtResource( 24 )]
+[node name="Bubbles" parent="Mesh/Particles" instance=ExtResource( 31 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.03877, 0 )
 
 [node name="FloorCast" type="RayCast" parent="."]
@@ -134,4 +136,12 @@ stream_array = [ ExtResource( 16 ), ExtResource( 25 ), ExtResource( 27 ), ExtRes
 
 [node name="DashTimer" type="Timer" parent="."]
 wait_time = 0.35
+one_shot = true
+
+[node name="StepTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="PickupTimer" type="Timer" parent="."]
+wait_time = 0.5
 one_shot = true
