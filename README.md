@@ -7,3 +7,6 @@
 	* search for `type`, under Text Editor > Completion tick "Add Type Hints"
 	* search for `white`, under Files enable "Trim Trailing Whitespace"
 4. Download Git LFS from https://git-lfs.github.com/
+
+### Assets
+* Water caustics from - https://opengameart.org/content/caustic-lighting - CC0
