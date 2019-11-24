@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://Prefabs/Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Materials/CharacterSkin.tres" type="Material" id=2]
@@ -23,12 +23,11 @@
 [ext_resource path="res://Sounds/Oof04.ogg" type="AudioStream" id=21]
 [ext_resource path="res://Sounds/Sand02.ogg" type="AudioStream" id=22]
 [ext_resource path="res://Sounds/Sand01.ogg" type="AudioStream" id=23]
-[ext_resource path="res://Sounds/Oof06.ogg" type="AudioStream" id=24]
 [ext_resource path="res://Sounds/Oof02.ogg" type="AudioStream" id=25]
 [ext_resource path="res://Sounds/Sand05.ogg" type="AudioStream" id=26]
 [ext_resource path="res://Sounds/Oof03.ogg" type="AudioStream" id=27]
 [ext_resource path="res://Materials/PlayerShadow.tres" type="Material" id=28]
-[ext_resource path="res://Prefabs/Player/Shadow.gd" type="Script" id=29]
+[ext_resource path="res://Prefabs/SandParticles/SandParticles.tscn" type="PackedScene" id=29]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.4
@@ -57,12 +56,11 @@ mesh = SubResource( 2 )
 material/0 = ExtResource( 2 )
 
 [node name="Shadow" type="CSGBox" parent="Mesh"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0190103, -4.27207, -0.012084 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.30839, 0 )
 width = 4.0
 height = 10.0
 depth = 4.0
 material = ExtResource( 28 )
-script = ExtResource( 29 )
 
 [node name="DebugLabel" type="Label" parent="Mesh"]
 margin_right = 40.0
@@ -70,6 +68,12 @@ margin_bottom = 14.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Particles" type="Spatial" parent="Mesh"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00399971, 0.388835, -0.0271854 )
+
+[node name="Sand" parent="Mesh/Particles" instance=ExtResource( 29 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2 )
 
 [node name="FloorCast" type="RayCast" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.254625, 0 )
@@ -83,7 +87,7 @@ stream_array = [ ExtResource( 11 ), ExtResource( 8 ), ExtResource( 4 ), ExtResou
 stream_array = [ ExtResource( 23 ), ExtResource( 22 ), ExtResource( 19 ), ExtResource( 18 ), ExtResource( 26 ), ExtResource( 20 ), ExtResource( 12 ), ExtResource( 14 ), ExtResource( 17 ), ExtResource( 15 ) ]
 
 [node name="JumpSoundPlayer" parent="." instance=ExtResource( 3 )]
-stream_array = [ ExtResource( 16 ), ExtResource( 25 ), ExtResource( 27 ), ExtResource( 21 ), ExtResource( 13 ), ExtResource( 24 ) ]
+stream_array = [ ExtResource( 16 ), ExtResource( 25 ), ExtResource( 27 ), ExtResource( 21 ), ExtResource( 13 ) ]
 
 [node name="DashTimer" type="Timer" parent="."]
 wait_time = 0.35
