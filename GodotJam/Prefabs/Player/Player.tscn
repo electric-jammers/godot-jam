@@ -89,3 +89,7 @@ stream_array = [ ExtResource( 23 ), ExtResource( 22 ), ExtResource( 19 ), ExtRes
 
 [node name="JumpSoundPlayer" parent="." instance=ExtResource( 3 )]
 stream_array = [ ExtResource( 16 ), ExtResource( 25 ), ExtResource( 27 ), ExtResource( 21 ), ExtResource( 13 ), ExtResource( 24 ) ]
+
+[node name="DashTimer" type="Timer" parent="."]
+wait_time = 0.35
+one_shot = true
