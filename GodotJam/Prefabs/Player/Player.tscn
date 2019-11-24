@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://Prefabs/Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Materials/CharacterSkin.tres" type="Material" id=2]
@@ -28,6 +28,7 @@
 [ext_resource path="res://Sounds/Sand05.ogg" type="AudioStream" id=26]
 [ext_resource path="res://Sounds/Oof03.ogg" type="AudioStream" id=27]
 [ext_resource path="res://Materials/PlayerShadow.tres" type="Material" id=28]
+[ext_resource path="res://Prefabs/SandParticles/SandParticles.tscn" type="PackedScene" id=29]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.4
@@ -68,6 +69,12 @@ margin_bottom = 14.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Particles" type="Spatial" parent="Mesh"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00399971, 0.388835, -0.0271854 )
+
+[node name="Sand" parent="Mesh/Particles" instance=ExtResource( 29 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.85 )
 
 [node name="FloorCast" type="RayCast" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.254625, 0 )

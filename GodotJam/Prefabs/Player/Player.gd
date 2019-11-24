@@ -63,7 +63,9 @@ func _process(delta: float):
 			add_child(new_block)
 
 			$SandSoundPlayer.play()
+			$Mesh/Particles/Sand.emitting = true
 
+	# Placing
 	if Input.is_action_just_pressed("action_place_Player" + str(player_index+1)):
 		if not _carried_blocks.empty():
 			var in_front = action_location + Vector3(0.0, 10.0, 0.0)
@@ -71,6 +73,7 @@ func _process(delta: float):
 				_carried_blocks.pop_back().queue_free()
 				_carried_blocks_info.pop_back()
 				$SandSoundPlayer.play()
+				$Mesh/Particles/Sand.emitting = true
 
 
 	# "Physics"
