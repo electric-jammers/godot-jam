@@ -72,6 +72,9 @@ __meta__ = {
 [node name="Particles" type="Spatial" parent="Mesh"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00399971, 0.388835, -0.0271854 )
 
+[node name="Walking" parent="Mesh/Particles" instance=ExtResource( 29 )]
+amount = 10
+
 [node name="Sand" parent="Mesh/Particles" instance=ExtResource( 29 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2 )
 

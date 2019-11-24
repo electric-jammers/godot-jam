@@ -4,6 +4,8 @@ extends KinematicBody
 onready var _meshes := $Mesh as Spatial
 onready var _floor_raycast := $FloorCast as RayCast
 onready var _dash_timer := $DashTimer as Timer
+onready var _walking_particles = $Mesh/Particles/Walking
+onready var _sand_particles = $Mesh/Particles/Sand
 
 # Consts
 const AIR_FRICTION := 0.25
@@ -65,7 +67,7 @@ func _process(delta: float):
 			add_child(new_block)
 
 			$SandSoundPlayer.play()
-			$Mesh/Particles/Sand.emitting = true
+			_sand_particles.emitting = true
 
 	# Placing
 	if Input.is_action_just_pressed("action_place_Player" + str(player_index+1)):
@@ -75,7 +77,7 @@ func _process(delta: float):
 				_carried_blocks.pop_back().queue_free()
 				_carried_blocks_info.pop_back()
 				$SandSoundPlayer.play()
-				$Mesh/Particles/Sand.emitting = true
+				_sand_particles.emitting = true
 
 
 	# "Physics"
@@ -89,7 +91,11 @@ func _process(delta: float):
 		_velocity *= 1.0 - AIR_FRICTION
 		_velocity += Vector3(0.0, -GRAVITY, 0.0)
 
-	move_and_slide(_velocity * min(delta, 0.3))
+	var new_velocity := move_and_slide(_velocity * min(delta, 0.3))
+	var horizontal_velocity := Vector2(new_velocity.x, new_velocity.z)
+
+	if horizontal_velocity.length_squared() > 0.5:
+		_walking_particles.emitting = true
 
 	# Dash
 	if player_index == 0:
