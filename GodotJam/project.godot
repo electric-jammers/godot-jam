@@ -34,6 +34,11 @@ config/icon="res://icon.png"
 
 GameState="*res://Scripts/GameState.gd"
 
+[display]
+
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
+
 [input]
 
 ui_accept={
