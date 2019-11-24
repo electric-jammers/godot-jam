@@ -6,6 +6,7 @@ onready var _floor_raycast := $FloorCast as RayCast
 onready var _dash_timer := $DashTimer as Timer
 onready var _walking_particles = $Mesh/Particles/Walking
 onready var _sand_particles = $Mesh/Particles/Sand
+onready var _bubble_particles = $Mesh/Particles/Bubbles
 
 # Consts
 const AIR_FRICTION := 0.25
@@ -94,7 +95,7 @@ func _process(delta: float):
 	var new_velocity := move_and_slide(_velocity * min(delta, 0.3))
 	var horizontal_velocity := Vector2(new_velocity.x, new_velocity.z)
 
-	if horizontal_velocity.length_squared() > 0.5:
+	if horizontal_velocity.length_squared() > 0.5 and abs(new_velocity.y) < 0.0001:
 		_walking_particles.emitting = true
 
 	# Dash
@@ -118,8 +119,10 @@ func _process(delta: float):
 
 			_meshes.transform.basis = new_basis
 
-	# Death by falling
+	# Death by drowning
 	if translation.y < -4:
 		$DrownSoundPlayer.play()
-		GameState.report_player_death(player_index)
 		_is_dead = true
+		_bubble_particles.emitting = true
+
+		GameState.report_player_death(player_index)

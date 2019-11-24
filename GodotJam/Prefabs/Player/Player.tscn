@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://Prefabs/Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Materials/CharacterSkin.tres" type="Material" id=2]
@@ -23,6 +23,7 @@
 [ext_resource path="res://Sounds/Oof04.ogg" type="AudioStream" id=21]
 [ext_resource path="res://Sounds/Sand02.ogg" type="AudioStream" id=22]
 [ext_resource path="res://Sounds/Sand01.ogg" type="AudioStream" id=23]
+[ext_resource path="res://Prefabs/BubblesParticles/BubblesParticles.tscn" type="PackedScene" id=24]
 [ext_resource path="res://Sounds/Oof02.ogg" type="AudioStream" id=25]
 [ext_resource path="res://Sounds/Sand05.ogg" type="AudioStream" id=26]
 [ext_resource path="res://Sounds/Oof03.ogg" type="AudioStream" id=27]
@@ -77,6 +78,9 @@ amount = 10
 
 [node name="Sand" parent="Mesh/Particles" instance=ExtResource( 29 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2 )
+
+[node name="Bubbles" parent="Mesh/Particles" instance=ExtResource( 24 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.03877, 0 )
 
 [node name="FloorCast" type="RayCast" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.254625, 0 )
