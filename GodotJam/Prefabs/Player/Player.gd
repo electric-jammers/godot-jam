@@ -1,13 +1,15 @@
 extends KinematicBody
 
 # Subnode
-onready var _meshes = $Mesh as Spatial
-onready var _floor_raycast = $FloorCast as RayCast
+onready var _meshes := $Mesh as Spatial
+onready var _floor_raycast := $FloorCast as RayCast
+onready var _dash_timer := $DashTimer as Timer
 
 # Consts
-const AIR_FRICTION := 0.2
+const AIR_FRICTION := 0.25
 const GROUND_FRICTION := 0.3
-const SPEED := 300.0
+const SPEED := 200.0
+const DASH_POWER := 4000.0
 const JUMP_POWER := 2500.0
 const GRAVITY := 100.0
 
@@ -86,18 +88,28 @@ func _process(delta: float):
 
 	move_and_slide(_velocity * delta)
 
+	# Dash
+	if player_index == 0:
+		$Mesh/DebugLabel.text = str(_dash_timer.time_left)
+
+	if _dash_timer.time_left <= 0.0 and Input.is_action_just_pressed("dash_Player" + str(player_index+1)):
+		_dash_timer.start()
+		_velocity += DASH_POWER * _meshes.transform.basis.z
+
 	# Facing
-	var ground_velocity = _velocity
-	ground_velocity.y = 0.0
+	if not Input.is_action_pressed("strafe_Player" + str(player_index+1)):
+		var ground_velocity = _velocity
+		ground_velocity.y = 0.0
 
-	if ground_velocity.length_squared() > 100.0:
-		var new_basis := Basis()
-		new_basis.y = Vector3.UP
-		new_basis.z = ground_velocity.normalized()
-		new_basis.x = new_basis.z.cross(new_basis.y).normalized()
+		if ground_velocity.length_squared() > 100.0:
+			var new_basis := Basis()
+			new_basis.y = Vector3.UP
+			new_basis.z = ground_velocity.normalized()
+			new_basis.x = new_basis.z.cross(new_basis.y).normalized()
 
-		_meshes.transform.basis = new_basis
+			_meshes.transform.basis = new_basis
 
+	# Death by falling
 	if translation.y < -4:
 		$DrownSoundPlayer.play()
 		GameState.report_player_death(player_index)
