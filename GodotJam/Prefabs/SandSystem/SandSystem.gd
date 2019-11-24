@@ -148,7 +148,7 @@ func draw_dummy(position: Vector3, dummy_index: int) -> void:
 		dummies[dummy_index] = dummy
 	var dummy = dummies[dummy_index]
 	dummy.translation = snapped_position
-	dummy.translation.y += 1.0
+	dummy.translation.y += BLOCK_SIZE
 
 
 func remove_sand(position: Vector3) -> void:
