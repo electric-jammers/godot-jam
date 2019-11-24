@@ -59,7 +59,7 @@ func get_sand_height(xz_pos: Vector2) -> float:
 	for y in size_y:
 		var position_index = internal_ints_to_index(x, y, z)
 		if position_index < 0 or position_index >= sand_voxels.size():
-			print("Trying to get sand height out of bounds!")
+			print("Trying to get sand height out of bounds at %d, %d" % [x,z])
 			return -1.0
 
 		if sand_voxels[position_index] == SandType.NONE:

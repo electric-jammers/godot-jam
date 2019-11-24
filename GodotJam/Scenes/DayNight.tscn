@@ -18,7 +18,7 @@ size = Vector2( 10, 10 )
 shader = ExtResource( 1 )
 shader_param/dayNightValue = null
 shader_param/colMultiplier = 1.0
-shader_param/horizon = 0.826
+shader_param/horizon = 0.732
 shader_param/texSampler = ExtResource( 5 )
 
 [node name="Spatial" type="Spatial"]
