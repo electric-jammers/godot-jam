@@ -145,7 +145,7 @@ func add_sand(position: Vector3, type_of_sand: int) -> bool:
 	cube.translation = index_to_world_position(position_index)
 	return true
 
-func draw_dummy(position: Vector3, dummy_index: int) -> void:
+func draw_dummy(position: Vector3, dummy_index: int) -> MeshInstance:
 	var position_index = position_to_index(position)
 	var snapped_position = index_to_world_position(position_index)
 	if !dummies.has(dummy_index):
@@ -156,6 +156,8 @@ func draw_dummy(position: Vector3, dummy_index: int) -> void:
 	dummy.visible = true
 	dummy.translation = snapped_position
 	dummy.translation.y += BLOCK_SIZE
+
+	return dummy
 
 
 func remove_sand(position: Vector3) -> void:

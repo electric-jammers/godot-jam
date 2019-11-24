@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://Prefabs/Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Materials/CharacterSkin.tres" type="Material" id=2]
@@ -31,6 +31,7 @@
 [ext_resource path="res://Prefabs/SandParticles/SandParticles.tscn" type="PackedScene" id=29]
 [ext_resource path="res://Scenes/shovel.tscn" type="PackedScene" id=30]
 [ext_resource path="res://Prefabs/BubblesParticles/BubblesParticles.tscn" type="PackedScene" id=31]
+[ext_resource path="res://Prefabs/BirdsEffect/BirdEffect.tscn" type="PackedScene" id=32]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.4
@@ -95,6 +96,10 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2 )
 
 [node name="Bubbles" parent="Mesh/Particles" instance=ExtResource( 31 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.03877, 0 )
+
+[node name="BirdsEffect" parent="Mesh/Particles" instance=ExtResource( 32 )]
+transform = Transform( 0.972686, 0, 0.232124, 0, 1, 0, -0.232124, 0, 0.972686, 0, 2.16607, 0 )
+speed = 2
 
 [node name="FloorCast" type="RayCast" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.254625, 0 )

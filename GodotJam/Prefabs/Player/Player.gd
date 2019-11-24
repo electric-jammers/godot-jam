@@ -1,4 +1,5 @@
 extends KinematicBody
+class_name Player
 
 # Subnode
 onready var _meshes := $Mesh as Spatial
@@ -14,6 +15,7 @@ onready var _sand_particles = $Mesh/Particles/Sand
 onready var _bubble_particles = $Mesh/Particles/Bubbles
 onready var _step_timer := $StepTimer as Timer
 onready var _pickup_recently_timer := $PickupTimer as Timer
+onready var _birds_effect := $Mesh/Particles/BirdsEffect
 
 # Consts
 const AIR_FRICTION := 0.25
@@ -27,11 +29,14 @@ const JUMP_POWER := 3000.0
 
 const GRAVITY := 100.0
 
+const HIT_FORCE := 3000
+
 # Public state
 export(int, 0, 1) var player_index := 0
 
 # Private state
 var _velocity := Vector3()
+var _hit_velocity := Vector3()
 var _won := false
 var _on_ground := false
 var _is_dead := false
@@ -49,6 +54,7 @@ func _ready():
 	material.albedo_color = [Color(0.698039, 0.364706, 0.27451), Color(0.356863, 0.662745, 0.513726)][player_index]
 
 	GameState.connect("game_over", self, "_on_game_over")
+	GameState.connect("player_hit", self, "_on_player_hit")
 
 func _process(delta: float):
 	if _won:
@@ -69,9 +75,18 @@ func _process(delta: float):
 
 	# Picking up
 	var action_location: Vector3 = _get_pickup_action_location()
-	sand.draw_dummy(action_location, player_index)
+	var dummy = sand.draw_dummy(action_location, player_index)
 
 	if Input.is_action_just_pressed("action_pickup_Player" + str(player_index+1)):
+		var dummy_area =  dummy.get_node("Area") as Area
+		var overlaps = dummy_area.get_overlapping_bodies()
+
+		for overlap in overlaps:
+			var player = overlap as Player
+			if player != null and player != self:
+				GameState.report_player_hit(player.player_index, _meshes.transform.basis.z * HIT_FORCE)
+				return
+
 		var sand_info = sand.extract_sand(action_location)
 
 		if sand_info.size() > 0:
@@ -116,6 +131,12 @@ func _process(delta: float):
 	else:
 		_velocity *= Vector3(1.0 - AIR_FRICTION, 1.0, 1.0 - AIR_FRICTION)
 		_velocity += Vector3(0.0, -GRAVITY, 0.0)
+
+	# Getting hit
+	if _hit_velocity.length_squared() > 0.01:
+		_velocity += _hit_velocity
+		_hit_velocity = Vector3()
+		_birds_effect.play()
 
 	var new_velocity := move_and_slide(_velocity * min(delta, 0.3))
 	var horizontal_velocity := Vector2(new_velocity.x, new_velocity.z)
@@ -197,3 +218,7 @@ func _on_game_over(winner: int):
 	if player_index == winner:
 		_winner_cam.make_current()
 		_won = true
+
+func _on_player_hit(hit_player: int, hit_velocity : Vector3):
+	if player_index == hit_player:
+		_hit_velocity = hit_velocity

@@ -3,6 +3,7 @@ extends Node
 # Emitted when stage changes
 signal stage_changed(new_stage)
 signal player_died(player_index)
+signal player_hit(player_index, hit_velocity)
 signal game_over(winning_player_index)
 
 enum GameStage {
@@ -94,6 +95,9 @@ func report_player_death(player_index: int):
 	game_over_timer.start()
 
 	emit_signal("player_died", player_index)
+
+func report_player_hit(player_index: int, hit_force : Vector3):
+	emit_signal("player_hit", player_index, hit_force)
 
 func _game_over_timer_timeout():
 	var winning_player := -1

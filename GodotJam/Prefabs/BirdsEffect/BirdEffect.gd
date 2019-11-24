@@ -1,11 +1,14 @@
+tool
 extends Spatial
 
-const RADIUS = 5
-const SPEED = 1
+onready var animation_player = $AnimationPlayer
 
-onready var bird_scene : PackedScene = preload("res://Scenes/birdie.tscn")
+var bird_scene : PackedScene = preload("res://Scenes/birdie.tscn")
 
 export var birds_count := 4 setget set_birds_count
+export var radius := 1
+export var speed := 1
+export var duration := 2
 
 var _phase := 0.0
 var _birds : Array
@@ -26,11 +29,15 @@ func set_birds_count(count : int):
 		var phase := ((PI * 2) / count) * i
 
 		bird.rotate_y(phase)
-		bird.translate(Vector3(RADIUS, 0, 0))
+		bird.translate(Vector3(radius, 0, 0))
+		bird.scale = Vector3(0.2, 0.2, 0.2)
 
 		add_child(bird)
 		_birds.append(bird)
 
+func play():
+	animation_player.play("Fade")
+
 
 func _process(delta : float):
-	rotation.y += delta * SPEED
+	rotation.y += delta * speed
