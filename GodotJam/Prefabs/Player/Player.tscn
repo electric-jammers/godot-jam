@@ -58,9 +58,9 @@ material/0 = ExtResource( 2 )
 
 [node name="Shadow" type="CSGBox" parent="Mesh"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.30839, 0 )
-width = 1.0
+width = 4.0
 height = 10.0
-depth = 1.0
+depth = 4.0
 material = ExtResource( 28 )
 
 [node name="DebugLabel" type="Label" parent="Mesh"]
