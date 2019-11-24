@@ -23,6 +23,7 @@
 [ext_resource path="res://Sounds/Oof04.ogg" type="AudioStream" id=21]
 [ext_resource path="res://Sounds/Sand02.ogg" type="AudioStream" id=22]
 [ext_resource path="res://Sounds/Sand01.ogg" type="AudioStream" id=23]
+[ext_resource path="res://Prefabs/Player/Shadow.gd" type="Script" id=24]
 [ext_resource path="res://Sounds/Oof02.ogg" type="AudioStream" id=25]
 [ext_resource path="res://Sounds/Sand05.ogg" type="AudioStream" id=26]
 [ext_resource path="res://Sounds/Oof03.ogg" type="AudioStream" id=27]
@@ -34,7 +35,7 @@
 radius = 0.4
 height = 0.5
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 resource_name = "ShovelAnim"
 length = 0.4
 tracks/0/type = "value"
@@ -62,10 +63,9 @@ tracks/1/keys = {
 "values": [ Vector3( 0.6, 0.6, 0.6 ), Vector3( 0.8, 0.8, 0.8 ), Vector3( 0.6, 0.6, 0.6 ) ]
 }
 
-[sub_resource type="CapsuleMesh" id=2]
+[sub_resource type="CapsuleMesh" id=3]
 
 [node name="Player" type="KinematicBody"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 script = ExtResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
@@ -73,7 +73,7 @@ transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 1.00
 shape = SubResource( 1 )
 
 [node name="ShovelAnimationPlayer" type="AnimationPlayer" parent="."]
-anims/ShovelAnim = SubResource( 3 )
+anims/ShovelAnim = SubResource( 2 )
 
 [node name="Mesh" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.412211, 0 )
@@ -83,12 +83,12 @@ transform = Transform( 0.6, 0, 0, 0, 0.494298, 0.340103, 0, -0.340103, 0.494298,
 
 [node name="MeshInstance" type="MeshInstance" parent="Mesh"]
 transform = Transform( 0.5, 0, 0, 0, -2.18557e-08, 0.5, 0, -0.5, -2.18557e-08, 0, 1.42656, 0 )
-mesh = SubResource( 2 )
+mesh = SubResource( 3 )
 material/0 = ExtResource( 2 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="Mesh"]
 transform = Transform( 0.15, 0, 0, 0, -0.14967, -0.00994112, 0, 0.00994112, -0.14967, 0, 1.69482, 0.513341 )
-mesh = SubResource( 2 )
+mesh = SubResource( 3 )
 material/0 = ExtResource( 2 )
 
 [node name="Shadow" type="CSGBox" parent="Mesh"]
@@ -97,6 +97,7 @@ width = 4.0
 height = 10.0
 depth = 4.0
 material = ExtResource( 28 )
+script = ExtResource( 24 )
 
 [node name="DebugLabel" type="Label" parent="Mesh"]
 margin_right = 40.0
