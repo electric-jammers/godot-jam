@@ -5,6 +5,9 @@ onready var _meshes := $Mesh as Spatial
 onready var _shovel := $ShovelAnimationPlayer as AnimationPlayer
 onready var _floor_raycast := $FloorCast as RayCast
 onready var _dash_timer := $DashTimer as Timer
+onready var _walking_particles = $Mesh/Particles/Walking
+onready var _sand_particles = $Mesh/Particles/Sand
+onready var _bubble_particles = $Mesh/Particles/Bubbles
 onready var _step_timer := $StepTimer as Timer
 onready var _pickup_recently_timer := $PickupTimer as Timer
 
@@ -77,7 +80,7 @@ func _process(delta: float):
 			_pickup_recently_timer.start()
 
 			$SandSoundPlayer.play()
-			$Mesh/Particles/Sand.emitting = true
+			_sand_particles.emitting = true
 			_shovel.stop(true)
 			_shovel.play("ShovelAnim")
 
@@ -89,7 +92,8 @@ func _process(delta: float):
 				_carried_blocks.pop_back().queue_free()
 				_carried_blocks_info.pop_back()
 				$SandSoundPlayer.play()
-				$Mesh/Particles/Sand.emitting = true
+				_sand_particles.emitting = true
+
 				_is_animating_shovel = true
 
 	# "Physics"
@@ -103,7 +107,11 @@ func _process(delta: float):
 		_velocity *= Vector3(1.0 - AIR_FRICTION, 1.0, 1.0 - AIR_FRICTION)
 		_velocity += Vector3(0.0, -GRAVITY, 0.0)
 
-	move_and_slide(_velocity * min(delta, 0.3), Vector3.UP)
+	var new_velocity := move_and_slide(_velocity * min(delta, 0.3))
+	var horizontal_velocity := Vector2(new_velocity.x, new_velocity.z)
+
+	if horizontal_velocity.length_squared() > 0.5 and abs(new_velocity.y) < 0.0001:
+		_walking_particles.emitting = true
 
 	# Detect walls and hop up (only if not hopped or collected recently)
 	if _step_timer.time_left <= 0.0 and _pickup_recently_timer.time_left <= 0.0:
@@ -141,7 +149,7 @@ func _process(delta: float):
 		if look_dir.length_squared() > 0.5 * 0.5:
 			_face_dir(look_dir)
 
-	# Death by falling
+	# Death by drowning
 	if translation.y < -4:
 		$DrownSoundPlayer.play()
 		GameState.report_player_death(player_index)
@@ -149,6 +157,7 @@ func _process(delta: float):
 			_carried_blocks.pop_back().queue_free()
 			_carried_blocks_info.pop_back()
 		_is_dead = true
+		_bubble_particles.emitting = true
 
 func _get_pickup_action_location() -> Vector3:
 	var half_block = Vector3(SandSystem.BLOCK_SIZE, 0.0, SandSystem.BLOCK_SIZE) * 0.5

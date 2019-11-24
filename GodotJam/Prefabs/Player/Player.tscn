@@ -30,6 +30,7 @@
 [ext_resource path="res://Materials/PlayerShadow.tres" type="Material" id=28]
 [ext_resource path="res://Prefabs/SandParticles/SandParticles.tscn" type="PackedScene" id=29]
 [ext_resource path="res://Meshes/shovel.glb" type="PackedScene" id=30]
+[ext_resource path="res://Prefabs/BubblesParticles/BubblesParticles.tscn" type="PackedScene" id=31]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.4
@@ -109,8 +110,15 @@ __meta__ = {
 [node name="Particles" type="Spatial" parent="Mesh"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00399971, 0.388835, -0.0271854 )
 
+[node name="Walking" parent="Mesh/Particles" instance=ExtResource( 29 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.710363, 0 )
+amount = 10
+
 [node name="Sand" parent="Mesh/Particles" instance=ExtResource( 29 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2 )
+
+[node name="Bubbles" parent="Mesh/Particles" instance=ExtResource( 31 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.03877, 0 )
 
 [node name="FloorCast" type="RayCast" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.254625, 0 )
