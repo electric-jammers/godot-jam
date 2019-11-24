@@ -58,7 +58,7 @@ func _process(delta: float):
 		return
 	current_time += delta
 	time_in_stage += delta
-	if get_normalized_stage_time() > 1.0:
+	if (stage == GameStage.DAY or stage == GameStage.NIGHT) and  get_normalized_stage_time() > 1.0:
 		if stage == GameStage.DAY:
 			enter_stage(GameStage.NIGHT)
 		elif stage == GameStage.NIGHT:
