@@ -30,6 +30,7 @@ var _water_system: WaterPlane
 const GAME_OVER_TIMER_DURATION = 1.0
 var game_over_timer := Timer.new()
 var alive_players := [true, true]
+var players_win_count := [0, 0]
 
 func _ready() -> void:
 	game_over_timer.one_shot = true
