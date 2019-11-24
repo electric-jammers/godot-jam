@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://Prefabs/Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Materials/CharacterSkin.tres" type="Material" id=2]
@@ -28,6 +28,7 @@
 [ext_resource path="res://Sounds/Sand05.ogg" type="AudioStream" id=26]
 [ext_resource path="res://Sounds/Oof03.ogg" type="AudioStream" id=27]
 [ext_resource path="res://Materials/PlayerShadow.tres" type="Material" id=28]
+[ext_resource path="res://Prefabs/Player/Shadow.gd" type="Script" id=29]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.4
@@ -56,11 +57,12 @@ mesh = SubResource( 2 )
 material/0 = ExtResource( 2 )
 
 [node name="Shadow" type="CSGBox" parent="Mesh"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.30839, 0 )
-width = 1.0
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0190103, -4.27207, -0.012084 )
+width = 4.0
 height = 10.0
-depth = 1.0
+depth = 4.0
 material = ExtResource( 28 )
+script = ExtResource( 29 )
 
 [node name="DebugLabel" type="Label" parent="Mesh"]
 margin_right = 40.0

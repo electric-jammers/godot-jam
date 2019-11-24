@@ -5,3 +5,4 @@
 [resource]
 render_priority = -100
 shader = ExtResource( 1 )
+shader_param/playerY = 0.0
