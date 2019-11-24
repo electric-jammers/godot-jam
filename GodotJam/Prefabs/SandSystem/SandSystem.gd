@@ -164,12 +164,12 @@ func internal_remove_sand(position_index: int) -> void:
 
 func internal_extract_sand(position_index: int) -> Array:
 	if position_index < 0 or position_index >= sand_voxels.size():
-		print("Trying to remove sand outside of the sand bounds!")
+		#print("Trying to remove sand outside of the sand bounds!")
 		return []
 
 	var sand_type := sand_voxels[position_index]
 	if sand_type == SandType.NONE:
-		print("No sand to extract here!")
+		#print("No sand to extract here!")
 		return []
 
 	sand_voxels[position_index] =  SandType.NONE
