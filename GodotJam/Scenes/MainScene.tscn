@@ -72,12 +72,17 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 13, 0 )
 player_index = 1
 
 [node name="OmniLight" type="OmniLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.32298, 14.4945, 12.3434 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.3874, 14.4945, 16.0022 )
+light_energy = 0.5
+omni_range = 33.6244
+
+[node name="OmniLight4" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 18.5605, 12.4178, -10.0398 )
 light_energy = 0.5
 omni_range = 33.6244
 
 [node name="OmniLight2" type="OmniLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15.5922, 7.69209, -4.90987 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -24.6386, 10.0334, -9.94841 )
 light_energy = 0.55
 light_bake_mode = 0
 omni_range = 36.6374
@@ -85,7 +90,7 @@ omni_range = 36.6374
 [node name="EndGameOverlay" parent="." instance=ExtResource( 8 )]
 
 [node name="OmniLight3" type="OmniLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 18.0197, 13.2109, -0.979009 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -26.4844, 15.4086, 17.0533 )
 light_color = Color( 1, 0.988235, 0.901961, 1 )
 light_energy = 0.6
 omni_range = 35.1303

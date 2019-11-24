@@ -29,7 +29,7 @@
 [ext_resource path="res://Sounds/Oof03.ogg" type="AudioStream" id=27]
 [ext_resource path="res://Materials/PlayerShadow.tres" type="Material" id=28]
 [ext_resource path="res://Prefabs/SandParticles/SandParticles.tscn" type="PackedScene" id=29]
-[ext_resource path="res://Meshes/shovel.glb" type="PackedScene" id=30]
+[ext_resource path="res://Scenes/shovel.tscn" type="PackedScene" id=30]
 [ext_resource path="res://Prefabs/BubblesParticles/BubblesParticles.tscn" type="PackedScene" id=31]
 
 [sub_resource type="CapsuleShape" id=1]
@@ -39,30 +39,6 @@ height = 0.5
 [sub_resource type="Animation" id=2]
 resource_name = "ShovelAnim"
 length = 0.4
-tracks/0/type = "value"
-tracks/0/path = NodePath("Mesh/Shovel:rotation_degrees")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector3( -34.53, 0, 0 ), Vector3( -135, 0, 0 ), Vector3( -34.53, 0, 0 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Mesh/Shovel:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector3( 0.6, 0.6, 0.6 ), Vector3( 0.8, 0.8, 0.8 ), Vector3( 0.6, 0.6, 0.6 ) ]
-}
 
 [sub_resource type="CapsuleMesh" id=3]
 
@@ -79,8 +55,8 @@ anims/ShovelAnim = SubResource( 2 )
 [node name="Mesh" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.412211, 0 )
 
-[node name="Shovel" parent="Mesh" instance=ExtResource( 30 )]
-transform = Transform( 0.6, 0, 0, 0, 0.494298, 0.340103, 0, -0.340103, 0.494298, 0.0584929, 1.32512, 0.488362 )
+[node name="shovel" parent="Mesh" instance=ExtResource( 30 )]
+transform = Transform( 0.6, 0, 0, 0, 0.494298, 0.340103, 0, -0.340103, 0.494298, 0.058, 1.325, 0.488 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Mesh"]
 transform = Transform( 0.5, 0, 0, 0, -2.18557e-08, 0.5, 0, -0.5, -2.18557e-08, 0, 1.42656, 0 )
@@ -112,7 +88,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00399971, 0.388835, -0.0271
 
 [node name="Walking" parent="Mesh/Particles" instance=ExtResource( 29 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.710363, 0 )
-amount = 10
+amount = 100
 
 [node name="Sand" parent="Mesh/Particles" instance=ExtResource( 29 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2 )
