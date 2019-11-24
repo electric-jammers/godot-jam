@@ -46,7 +46,7 @@ func _process(delta: float):
 	var sand = GameState.get_sand_system()
 
 	# Picking up
-	var action_location : Vector3 = translation - Vector3(0.0, 1.0, 0.0) + (_meshes.transform.basis.z * 2.0)
+	var action_location : Vector3 = translation - Vector3(0.0, 1.0, 0.0) + (_meshes.transform.basis.z * SandSystem.BLOCK_SIZE)
 	sand.draw_dummy(action_location, player_index)
 	if Input.is_action_just_pressed("action_pickup_Player" + str(player_index+1)):
 		var sand_info = sand.extract_sand(action_location)
@@ -89,9 +89,6 @@ func _process(delta: float):
 	move_and_slide(_velocity * min(delta, 0.3))
 
 	# Dash
-	if player_index == 0:
-		$Mesh/DebugLabel.text = str(_dash_timer.time_left)
-
 	if _dash_timer.time_left <= 0.0 and Input.is_action_just_pressed("dash_Player" + str(player_index+1)):
 		_dash_timer.start()
 		_velocity += DASH_POWER * _meshes.transform.basis.z
@@ -102,15 +99,27 @@ func _process(delta: float):
 		ground_velocity.y = 0.0
 
 		if ground_velocity.length_squared() > 100.0:
-			var new_basis := Basis()
-			new_basis.y = Vector3.UP
-			new_basis.z = ground_velocity.normalized()
-			new_basis.x = new_basis.z.cross(new_basis.y).normalized()
+			_face_dir(ground_velocity)
+	else:
+		var look_dir := Vector3()
+		look_dir.x = Input.get_action_strength("look_-X_Player" + str(player_index+1)) - Input.get_action_strength("look_+X_Player" + str(player_index+1))
+		look_dir.z = Input.get_action_strength("look_-Y_Player" + str(player_index+1)) - Input.get_action_strength("look_+Y_Player" + str(player_index+1))
 
-			_meshes.transform.basis = new_basis
+		if look_dir.length_squared() > 0.5 * 0.5:
+			_face_dir(look_dir)
 
 	# Death by falling
 	if translation.y < -4:
 		$DrownSoundPlayer.play()
 		GameState.report_player_death(player_index)
 		_is_dead = true
+
+func _face_dir(dir: Vector3):
+	$Mesh/DebugLabel.text = "FACE " + str(dir)
+
+	var new_basis := Basis()
+	new_basis.y = Vector3.UP
+	new_basis.z = dir.normalized()
+	new_basis.x = new_basis.z.cross(new_basis.y).normalized()
+
+	_meshes.transform.basis = new_basis
