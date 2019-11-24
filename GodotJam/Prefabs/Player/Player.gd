@@ -31,7 +31,7 @@ func _ready():
 	material.albedo_color = [Color(0.698039, 0.364706, 0.27451), Color(0.356863, 0.662745, 0.513726)][player_index]
 
 func _process(delta: float):
-	if _is_dead:
+	if _is_dead or GameState.stage == GameState.GameStage.GAME_OVER:
 		return
 	# Input
 	var dir := Vector3()

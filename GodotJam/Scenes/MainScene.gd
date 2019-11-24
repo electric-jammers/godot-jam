@@ -2,7 +2,7 @@ extends Spatial
 
 func _ready():
 	GameState.enter_stage(GameState.GameStage.DAY)
-	GameState.connect("player_died", self, "_on_player_died")
+	GameState.connect("game_over", self, "_on_game_over")
 
 func _input(event: InputEvent):
 	if event is InputEventKey and event.scancode == KEY_T:
@@ -12,10 +12,5 @@ func _input(event: InputEvent):
 		yield(get_tree().create_timer(1.0), "timeout")
 		water.animate_away()
 
-func _on_player_died(index : int):
-	var winner := 0
-
-	if index == 0:
-		winner = 1
-
+func _on_game_over(winner : int):
 	$EndGameOverlay.display(winner + 1)

@@ -1,7 +1,12 @@
 extends Control
 
+onready var label : Label = $ColorRect/MarginContainer/VBoxContainer/Label
+
 func display(winner : int):
-	$ColorRect/MarginContainer/VBoxContainer/Label.text = "Player " + String(winner) + " wins!"
+	if winner == 0:
+		label.text = "It's a tie!"
+	else:
+		label.text = "Player " + String(winner) + " wins!"
 	$AnimationPlayer.play("fade")
 	$ColorRect/MarginContainer/VBoxContainer/HBoxContainer/PlayAgainButton.grab_focus()
 

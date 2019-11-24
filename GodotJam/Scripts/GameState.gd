@@ -3,12 +3,15 @@ extends Node
 # Emitted when stage changes
 signal stage_changed(new_stage)
 signal player_died(player_index)
+signal game_over(winning_player_index)
 
 enum GameStage {
 	FRONTEND,
 
 	DAY,
-	NIGHT
+	NIGHT,
+
+	GAME_OVER
 }
 
 const STAGE_LEN := 5.0
@@ -22,6 +25,17 @@ var stage = GameStage.FRONTEND
 
 var _sand_system: SandSystem
 var _water_system: WaterPlane
+
+# Player death handling
+const GAME_OVER_TIMER_DURATION = 1.0
+var game_over_timer := Timer.new()
+var alive_players := [true, true]
+
+func _ready() -> void:
+	game_over_timer.one_shot = true
+	game_over_timer.wait_time = GAME_OVER_TIMER_DURATION
+	game_over_timer.connect("timeout", self, "_game_over_timer_timeout")
+	add_child(game_over_timer)
 
 # 0 = noon, 0.5 = midnight, 1 = noon
 func get_normalized_day_night_cycle_time() -> float:
@@ -54,6 +68,7 @@ func enter_stage(new_game_stage):
 	if stage == new_game_stage:
 		return
 
+
 	if new_game_stage == GameStage.DAY and stage == GameStage.NIGHT:
 		_water_system.animate_away()
 	if new_game_stage == GameStage.NIGHT:
@@ -69,4 +84,18 @@ func get_sand_system() -> SandSystem:
 	return _sand_system
 
 func report_player_death(player_index: int):
+	alive_players[player_index] = false
+	game_over_timer.start()
+
 	emit_signal("player_died", player_index)
+
+func _game_over_timer_timeout():
+	var winning_player := -1
+
+	for i in range(alive_players.size()):
+		if alive_players[i]:
+			winning_player = i
+		alive_players[i] = true
+	enter_stage(GameStage.GAME_OVER)
+
+	emit_signal("game_over", winning_player)
