@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://Prefabs/Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Materials/CharacterSkin.tres" type="Material" id=2]
@@ -34,7 +34,7 @@
 radius = 0.4
 height = 0.5
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 resource_name = "ShovelAnim"
 length = 0.4
 tracks/0/type = "value"
@@ -62,10 +62,9 @@ tracks/1/keys = {
 "values": [ Vector3( 0.6, 0.6, 0.6 ), Vector3( 0.8, 0.8, 0.8 ), Vector3( 0.6, 0.6, 0.6 ) ]
 }
 
-[sub_resource type="CapsuleMesh" id=2]
+[sub_resource type="CapsuleMesh" id=3]
 
 [node name="Player" type="KinematicBody"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 script = ExtResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
@@ -73,7 +72,7 @@ transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 1.00
 shape = SubResource( 1 )
 
 [node name="ShovelAnimationPlayer" type="AnimationPlayer" parent="."]
-anims/ShovelAnim = SubResource( 3 )
+anims/ShovelAnim = SubResource( 2 )
 
 [node name="Mesh" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.412211, 0 )
@@ -83,12 +82,12 @@ transform = Transform( 0.6, 0, 0, 0, 0.494298, 0.340103, 0, -0.340103, 0.494298,
 
 [node name="MeshInstance" type="MeshInstance" parent="Mesh"]
 transform = Transform( 0.5, 0, 0, 0, -2.18557e-08, 0.5, 0, -0.5, -2.18557e-08, 0, 1.42656, 0 )
-mesh = SubResource( 2 )
+mesh = SubResource( 3 )
 material/0 = ExtResource( 2 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="Mesh"]
 transform = Transform( 0.15, 0, 0, 0, -0.14967, -0.00994112, 0, 0.00994112, -0.14967, 0, 1.69482, 0.513341 )
-mesh = SubResource( 2 )
+mesh = SubResource( 3 )
 material/0 = ExtResource( 2 )
 
 [node name="Shadow" type="CSGBox" parent="Mesh"]
@@ -128,3 +127,9 @@ stream_array = [ ExtResource( 16 ), ExtResource( 25 ), ExtResource( 27 ), ExtRes
 [node name="DashTimer" type="Timer" parent="."]
 wait_time = 0.35
 one_shot = true
+
+[node name="CamParent" type="Spatial" parent="."]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0, 0, 0 )
+
+[node name="Camera" type="Camera" parent="CamParent"]
+transform = Transform( -1.62921e-07, 0.422618, -0.906308, 0, 0.906308, 0.422618, 1, 6.88533e-08, -1.47656e-07, -4.12968, 3.45267, 0.124418 )

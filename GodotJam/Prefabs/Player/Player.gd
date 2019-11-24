@@ -5,6 +5,8 @@ onready var _meshes := $Mesh as Spatial
 onready var _shovel := $ShovelAnimationPlayer as AnimationPlayer
 onready var _floor_raycast := $FloorCast as RayCast
 onready var _dash_timer := $DashTimer as Timer
+onready var _winner_cam_parent := $CamParent as Spatial
+onready var _winner_cam := $CamParent/Camera as Camera
 
 # Consts
 const AIR_FRICTION := 0.25
@@ -23,6 +25,7 @@ export(int, 0, 1) var player_index := 0
 
 # Private state
 var _velocity := Vector3()
+var _won := false
 var _on_ground := false
 var _is_dead := false
 var _is_animating_shovel := false
@@ -38,7 +41,12 @@ func _ready():
 
 	material.albedo_color = [Color(0.698039, 0.364706, 0.27451), Color(0.356863, 0.662745, 0.513726)][player_index]
 
+	GameState.connect("game_over", self, "_on_game_over")
+
 func _process(delta: float):
+	if _won:
+		_winner_cam_parent.rotate_y(delta * 2);
+
 	if _is_dead or GameState.stage == GameState.GameStage.GAME_OVER:
 		return
 
@@ -145,6 +153,7 @@ func _process(delta: float):
 			_carried_blocks_info.pop_back()
 		_is_dead = true
 
+
 func _face_dir(dir: Vector3):
 	var new_basis := Basis()
 	new_basis.y = Vector3.UP
@@ -152,3 +161,9 @@ func _face_dir(dir: Vector3):
 	new_basis.x = new_basis.z.cross(new_basis.y).normalized()
 
 	_meshes.transform.basis = new_basis
+
+
+func _on_game_over(winner: int):
+	if player_index == winner:
+		_winner_cam.make_current()
+		_won = true
