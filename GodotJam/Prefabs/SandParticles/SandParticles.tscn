@@ -9,10 +9,9 @@ spread = 120.0
 initial_velocity = 3.0
 initial_velocity_random = 0.5
 scale_random = 1.0
-color = Color( 1, 0.858824, 0.101961, 1 )
 
 [sub_resource type="SpatialMaterial" id=2]
-albedo_color = Color( 0.690196, 0.611765, 0.239216, 1 )
+albedo_color = Color( 0.788235, 0.729412, 0.454902, 1 )
 
 [sub_resource type="CubeMesh" id=3]
 material = SubResource( 2 )
