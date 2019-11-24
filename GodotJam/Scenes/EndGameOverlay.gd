@@ -1,12 +1,13 @@
 extends Control
 
-onready var label : Label = $ColorRect/MarginContainer/VBoxContainer/Label
+onready var green_label = $ColorRect/MarginContainer/VBoxContainer/HBoxContainer2/GreenScore
+onready var red_label = $ColorRect/MarginContainer/VBoxContainer/HBoxContainer2/RedScore
+onready var label = $ColorRect/MarginContainer/VBoxContainer/Label
 
 func display(winner : int):
 	var loser = 0
 	if winner == 0:
 		loser = 1
-
 	if winner == -1:
 		var tieMessage = randi()%3
 		if tieMessage == 0:
@@ -16,6 +17,11 @@ func display(winner : int):
 		if tieMessage == 2:
 			label.text = "Well that's sad, no winners!"
 	else:
+		# Score labels
+		GameState.players_win_count[winner] += 1
+		green_label.text = String(GameState.players_win_count[0])
+		red_label.text = String(GameState.players_win_count[1])
+
 		var tieMessage = randi()%5
 		if tieMessage == 0:
 			label.text =  _get_player_color(winner) + " completely dominated " + _get_player_color(loser) + "!"
