@@ -37,7 +37,7 @@ func _ready() -> void:
 	game_over_timer.connect("timeout", self, "_game_over_timer_timeout")
 	add_child(game_over_timer)
 
-# 0 = noon, 0.5 = midnight, 1 = noon
+# 0 = midnight, 0.5 = noon, 1 = midnight
 func get_normalized_day_night_cycle_time() -> float:
 	var result : float
 	if stage == GameStage.NIGHT:
