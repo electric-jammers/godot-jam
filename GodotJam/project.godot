@@ -149,4 +149,5 @@ action_place_Player2={
 
 [rendering]
 
+quality/filters/msaa=3
 environment/default_environment="res://default_env.tres"
