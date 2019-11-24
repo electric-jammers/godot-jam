@@ -234,7 +234,7 @@ func _ready() -> void:
 	# Bedrock
 	for z in size_z:
 		for x in size_x:
-			add_sand(Vector3(x * BLOCK_SIZE, 0, z * BLOCK_SIZE) - root_position, SandType.BEDROCK)
+			add_sand(Vector3(x * BLOCK_SIZE, 0, z * BLOCK_SIZE) - root_position, SandType.ROCK)
 
 	var noise = OpenSimplexNoise.new()
 	noise.seed = randi()
@@ -245,17 +245,11 @@ func _ready() -> void:
 	# Initial land
 	for z in size_z:
 		for x in size_x:
-			# Sample
 			var n = noise.get_noise_2d(x, z) * 5.0 + 5.0
-
 			for ni in n:
 				var dn = n - ni - 1
-				add_sand(Vector3(x * BLOCK_SIZE, 1 + ni, z * BLOCK_SIZE) - root_position, SandType.SOFT_SAND if dn > 3 else SandType.HARD_SAND if dn > 1 else SandType.ROCK)
+				add_sand(Vector3(x * BLOCK_SIZE, 1 + ni, z * BLOCK_SIZE) - root_position, SandType.ROCK if dn > 3 else SandType.HARD_SAND if dn > 1 else SandType.SOFT_SAND)
 
-			add_sand(Vector3(x * BLOCK_SIZE, 2, z * BLOCK_SIZE) - root_position, SandType.HARD_SAND)
-#			add_sand(Vector3(x * BLOCK_SIZE, 3, z * BLOCK_SIZE) - root_position, SandType.HARD_SAND)
-#			add_sand(Vector3(x * BLOCK_SIZE, 4, z * BLOCK_SIZE) - root_position, SandType.SOFT_SAND)
-#			add_sand(Vector3(x * BLOCK_SIZE, 5, z * BLOCK_SIZE) - root_position, SandType.SOFT_SAND)
 
 	GameState._sand_system = self
 
