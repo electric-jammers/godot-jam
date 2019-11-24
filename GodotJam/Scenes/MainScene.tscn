@@ -22,7 +22,7 @@ shader_param/dayNightValue = 1.0
 script = ExtResource( 5 )
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.875228, 0.483711, 0, -0.483711, 0.875228, 0, 20, 25 )
+transform = Transform( 1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 20, 30 )
 fov = 50.0
 far = 8000.0
 

@@ -9,7 +9,9 @@ var size_x : int = 26
 var size_y : int = 16
 var size_z : int = 16
 
-var root_position = Vector3(12.5, 0, 7.5)
+const BLOCK_SIZE := 1.5
+
+var root_position = Vector3(12.5, 0, 7.5) * BLOCK_SIZE
 
 enum SandType {
 	NONE,
@@ -35,10 +37,10 @@ func index_to_world_position(index: int) -> Vector3:
 	var z := (index - (y * size_x * size_z)) / size_x
 	var x := index - ((y * size_x * size_z) + (z * size_x))
 	var result := Vector3(x, y, z)
-	return result - root_position
+	return (result * BLOCK_SIZE) - root_position
 
 func position_to_index(position: Vector3) -> int:
-	position = position + root_position
+	position = (position + root_position) / BLOCK_SIZE
 	var x := int(position.x)
 	var y := int(position.y)
 	var z := int(position.z)
@@ -146,7 +148,7 @@ func draw_dummy(position: Vector3, dummy_index: int) -> void:
 		dummies[dummy_index] = dummy
 	var dummy = dummies[dummy_index]
 	dummy.translation = snapped_position
-	dummy.translation.y += 1.0
+	dummy.translation.y += BLOCK_SIZE
 
 
 func remove_sand(position: Vector3) -> void:
@@ -222,11 +224,11 @@ func _ready() -> void:
 
 	for z in size_z:
 		for x in size_x:
-			add_sand(Vector3(x, 0, z) - root_position, SandType.ROCK)
-			add_sand(Vector3(x, 1, z) - root_position, SandType.HARD_SAND)
-			add_sand(Vector3(x, 2, z) - root_position, SandType.HARD_SAND)
-			add_sand(Vector3(x, 3, z) - root_position, SandType.SOFT_SAND)
-			add_sand(Vector3(x, 4, z) - root_position, SandType.SOFT_SAND)
+			add_sand(Vector3(x * BLOCK_SIZE, 0, z * BLOCK_SIZE) - root_position, SandType.ROCK)
+			add_sand(Vector3(x * BLOCK_SIZE, 1, z * BLOCK_SIZE) - root_position, SandType.HARD_SAND)
+			add_sand(Vector3(x * BLOCK_SIZE, 2, z * BLOCK_SIZE) - root_position, SandType.HARD_SAND)
+			add_sand(Vector3(x * BLOCK_SIZE, 3, z * BLOCK_SIZE) - root_position, SandType.SOFT_SAND)
+			add_sand(Vector3(x * BLOCK_SIZE, 4, z * BLOCK_SIZE) - root_position, SandType.SOFT_SAND)
 
 	GameState._sand_system = self
 

@@ -10,7 +10,7 @@ const AIR_FRICTION := 0.25
 const GROUND_FRICTION := 0.3
 const SPEED := 200.0
 const DASH_POWER := 4000.0
-const JUMP_POWER := 2500.0
+const JUMP_POWER := 3000.0
 const GRAVITY := 100.0
 
 # Public state
@@ -61,7 +61,7 @@ func _process(delta: float):
 			block_collision.disabled = true
 
 			new_block.get_parent_spatial().remove_child(new_block)
-			new_block.translation = Vector3(0.0, _carried_blocks.size() * 1.0 + 2.0, 0.0)
+			new_block.translation = Vector3(0.0, _carried_blocks.size() * (0.1 + SandSystem.BLOCK_SIZE) + 2.0, 0.0)
 			add_child(new_block)
 
 			$SandSoundPlayer.play()
@@ -89,7 +89,7 @@ func _process(delta: float):
 		_velocity *= 1.0 - AIR_FRICTION
 		_velocity += Vector3(0.0, -GRAVITY, 0.0)
 
-	move_and_slide(_velocity * delta)
+	move_and_slide(_velocity * min(delta, 0.3))
 
 	# Dash
 	if player_index == 0:
