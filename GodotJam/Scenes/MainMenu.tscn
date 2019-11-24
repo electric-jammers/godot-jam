@@ -8,12 +8,12 @@ code = "shader_type canvas_item;
 
 void fragment()
 {
-	float vf = smoothstep(0.225, 0.22, SCREEN_UV.y + sin(SCREEN_UV.x*50.0) * 0.01 + sin(SCREEN_UV.x*20.0) * 0.01);
+	float vf = smoothstep(0.32, 0.325, UV.y + sin(UV.x*50.0) * 0.01 + sin(UV.x*20.0) * 0.01);
 	vec3 col = mix(
 		// Sky
-		mix(vec3(0.56, 0.68, 0.75), vec3(0.26, 0.42, 0.55), SCREEN_UV.y*2.0-0.5),
+		mix(vec3(0.56, 0.68, 0.75), vec3(0.26, 0.42, 0.55), UV.y*4.0-0.75),
 		// Beach
-		mix(vec3(0.7, 0.55, 0.4), vec3(0.6, 0.55, 0.35), SCREEN_UV.x),
+		mix(vec3(0.7, 0.55, 0.4), vec3(0.6, 0.55, 0.35), UV.x),
 		// Horizon point
 			vf);
 	
