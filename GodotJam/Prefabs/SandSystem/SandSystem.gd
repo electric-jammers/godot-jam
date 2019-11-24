@@ -50,11 +50,12 @@ func position_to_index(position: Vector3) -> int:
 func internal_ints_to_index(var x, var y, var z) -> int:
 	return int(x) + (int(y) * size_x * size_z) + (int(z) * (size_x))
 
-func get_sand_height(xz_pos: Vector2) -> float:
-
+func get_sand_height(world_pos: Vector3) -> float:
 	var y_lowest :int= 0
-	var x := int (xz_pos.x - root_position.x)
-	var z := int (xz_pos.y - root_position.z)
+
+	world_pos = (world_pos + root_position) / BLOCK_SIZE
+	var x := int(world_pos.x)
+	var z := int(world_pos.z)
 
 	for y in size_y:
 		var position_index = internal_ints_to_index(x, y, z)

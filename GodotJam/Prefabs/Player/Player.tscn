@@ -92,3 +92,11 @@ stream_array = [ ExtResource( 16 ), ExtResource( 25 ), ExtResource( 27 ), ExtRes
 [node name="DashTimer" type="Timer" parent="."]
 wait_time = 0.35
 one_shot = true
+
+[node name="StepTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="PickupTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
