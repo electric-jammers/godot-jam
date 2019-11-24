@@ -29,7 +29,8 @@ const JUMP_POWER := 3000.0
 
 const GRAVITY := 100.0
 
-const HIT_FORCE := 3000
+const HIT_FORCE := 11000
+const HIT_FORCE_UP := 2000
 
 # Public state
 export(int, 0, 1) var player_index := 0
@@ -84,7 +85,7 @@ func _process(delta: float):
 		for overlap in overlaps:
 			var player = overlap as Player
 			if player != null and player != self:
-				GameState.report_player_hit(player.player_index, _meshes.transform.basis.z * HIT_FORCE)
+				GameState.report_player_hit(player.player_index, _meshes.transform.basis.z * HIT_FORCE + (_meshes.transform.basis.y * HIT_FORCE_UP))
 				return
 
 		var sand_info = sand.extract_sand(action_location)
