@@ -2,6 +2,7 @@ extends KinematicBody
 
 # Subnode
 onready var _meshes := $Mesh as Spatial
+onready var _shovel := $ShovelAnimationPlayer as AnimationPlayer
 onready var _floor_raycast := $FloorCast as RayCast
 onready var _dash_timer := $DashTimer as Timer
 onready var _step_timer := $StepTimer as Timer
@@ -26,6 +27,7 @@ export(int, 0, 1) var player_index := 0
 var _velocity := Vector3()
 var _on_ground := false
 var _is_dead := false
+var _is_animating_shovel := false
 
 var _carried_blocks: Array # of Spatial
 var _carried_blocks_info: Array # of int
@@ -76,6 +78,8 @@ func _process(delta: float):
 
 			$SandSoundPlayer.play()
 			$Mesh/Particles/Sand.emitting = true
+			_shovel.stop(true)
+			_shovel.play("ShovelAnim")
 
 	# Placing
 	if Input.is_action_just_pressed("action_place_Player" + str(player_index+1)):
@@ -86,7 +90,7 @@ func _process(delta: float):
 				_carried_blocks_info.pop_back()
 				$SandSoundPlayer.play()
 				$Mesh/Particles/Sand.emitting = true
-
+				_is_animating_shovel = true
 
 	# "Physics"
 	if _on_ground:
