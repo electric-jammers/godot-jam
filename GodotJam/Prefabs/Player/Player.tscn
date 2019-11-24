@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://Prefabs/Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Materials/CharacterSkin.tres" type="Material" id=2]
@@ -23,7 +23,6 @@
 [ext_resource path="res://Sounds/Oof04.ogg" type="AudioStream" id=21]
 [ext_resource path="res://Sounds/Sand02.ogg" type="AudioStream" id=22]
 [ext_resource path="res://Sounds/Sand01.ogg" type="AudioStream" id=23]
-[ext_resource path="res://Sounds/Oof06.ogg" type="AudioStream" id=24]
 [ext_resource path="res://Sounds/Oof02.ogg" type="AudioStream" id=25]
 [ext_resource path="res://Sounds/Sand05.ogg" type="AudioStream" id=26]
 [ext_resource path="res://Sounds/Oof03.ogg" type="AudioStream" id=27]
@@ -88,7 +87,7 @@ stream_array = [ ExtResource( 11 ), ExtResource( 8 ), ExtResource( 4 ), ExtResou
 stream_array = [ ExtResource( 23 ), ExtResource( 22 ), ExtResource( 19 ), ExtResource( 18 ), ExtResource( 26 ), ExtResource( 20 ), ExtResource( 12 ), ExtResource( 14 ), ExtResource( 17 ), ExtResource( 15 ) ]
 
 [node name="JumpSoundPlayer" parent="." instance=ExtResource( 3 )]
-stream_array = [ ExtResource( 16 ), ExtResource( 25 ), ExtResource( 27 ), ExtResource( 21 ), ExtResource( 13 ), ExtResource( 24 ) ]
+stream_array = [ ExtResource( 16 ), ExtResource( 25 ), ExtResource( 27 ), ExtResource( 21 ), ExtResource( 13 ) ]
 
 [node name="DashTimer" type="Timer" parent="."]
 wait_time = 0.35
