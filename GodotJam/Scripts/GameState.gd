@@ -79,6 +79,12 @@ func enter_stage(new_game_stage):
 	stage = new_game_stage
 	emit_signal("stage_changed", new_game_stage)
 
+	if new_game_stage == GameStage.GAME_OVER:
+		var dm0 = _sand_system.dummies[0] as MeshInstance
+		dm0.visible = false;
+		var dm1 = _sand_system.dummies[1] as MeshInstance
+		dm1.visible = false;
+
 	time_in_stage = 0.0
 
 func get_sand_system() -> SandSystem:

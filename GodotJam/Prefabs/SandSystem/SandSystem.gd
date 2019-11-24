@@ -153,6 +153,7 @@ func draw_dummy(position: Vector3, dummy_index: int) -> void:
 		add_child(dummy)
 		dummies[dummy_index] = dummy
 	var dummy = dummies[dummy_index]
+	dummy.visible = true
 	dummy.translation = snapped_position
 	dummy.translation.y += BLOCK_SIZE
 

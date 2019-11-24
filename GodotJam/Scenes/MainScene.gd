@@ -13,4 +13,4 @@ func _input(event: InputEvent):
 		water.animate_away()
 
 func _on_game_over(winner : int):
-	$EndGameOverlay.display(winner + 1)
+	$EndGameOverlay.display(winner)

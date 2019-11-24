@@ -131,8 +131,8 @@ func _process(delta: float):
 			var sand_height_here = GameState.get_sand_system().get_sand_height(translation + Vector3(SandSystem.BLOCK_SIZE, 0.0, SandSystem.BLOCK_SIZE) * 0.5)
 			var sand_height_there = GameState.get_sand_system().get_sand_height(_get_pickup_action_location())
 
-			if player_index == 0:
-				$Mesh/DebugLabel.text = "Hop: " + str(sand_height_here) + " -> " + str(sand_height_there)
+			# if player_index == 0:
+				# $Mesh/DebugLabel.text = "Hop: " + str(sand_height_here) + " -> " + str(sand_height_there)
 
 			if sand_height_there == sand_height_here + 1:
 				_velocity.y += STEP_POWER
