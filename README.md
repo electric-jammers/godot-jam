@@ -19,7 +19,7 @@ Made in 20 hours by 6 people, for most of us our first time using Godot.
 - [Erik Selecky](https://www.seleckye.com)
 - [AJ Weeks](https://twitter.com/liqwidice/)
 - [Joe Flood](https://tinygoose.itch.io/) (website: [TinyGoose](http://www.tinygoose.co.uk/))
-- [Tom Read Cutting](https://moosichu.com)
+- [Tom Read Cutting](http://moosichu.com)
 - [Daniel Szendrei](https://www.linkedin.com/in/danielszendrei/)
 - [Jonas De Maeseneer](https://www.linkedin.com/in/jonasdemaeseneer/)
 
