@@ -2,6 +2,10 @@
 
 Two-player local multiplayer competitive action game; Use your shovel to stack sand to escape the rising tide or to slap your foe!
 
+![Screenshot 1](https://img.itch.zone/aW1hZ2UvNTIyODM1LzI3MTU2MjQucG5n/original/9Zwm2S.png)
+![Screenshot 2](https://img.itch.zone/aW1hZ2UvNTIyODM1LzI3MTU2MTQuanBn/original/JHdnSX.jpg)
+![Screenshot 3](https://img.itch.zone/aW1hZ2UvNTIyODM1LzI3MTU2MTYuanBn/original/UQV7nP.jpg)
+
 
 Controls: (Controllers recommended!)
 Move: Left stick
