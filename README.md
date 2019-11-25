@@ -1,4 +1,27 @@
-## Godot Jam 2019
+# 👏 Slappin' Stackers 👏
+
+Two-player local multiplayer competitive action game; Use your shovel to stack sand to escape the rising tide or to slap your foe!
+
+
+Controls: (Controllers recommended!)
+Move: Left stick
+Jump: A (Xbox)
+Pick up block/SLAP: Right bumper (Xbox)
+Place block/STACK: Right trigger (Xbox)
+
+
+Made in 20 hours by 6 people, for most of us our first time using Godot.
+
+[Erik Selecky](https://www.seleckye.com)
+[AJ Weeks](https://twitter.com/liqwidice/)
+[Joe Flood](https://tinygoose.itch.io/) (website: [TinyGoose](http://www.tinygoose.co.uk/))
+[Tom Read Cutting](https://moosichu.com)
+[Daniel Szendrei](https://www.linkedin.com/in/danielszendrei/)
+[Jonas De Maeseneer](https://www.linkedin.com/in/jonasdemaeseneer/)
+
+Download it from [itch.io](https://electric-jammers.itch.io/slappin-stackers).
+
+# Godot Jam 2019
 
 ### How to get started
 1. Download Git LFS from https://git-lfs.github.com/
