@@ -57,7 +57,7 @@ func _ready():
 	GameState.connect("game_over", self, "_on_game_over")
 	GameState.connect("player_hit", self, "_on_player_hit")
 
-func _process(delta: float):
+func _physics_process(delta: float):
 	if _won:
 		_winner_cam_parent.rotate_y(delta * 2);
 
@@ -125,7 +125,7 @@ func _process(delta: float):
 	# "Physics"
 	if _on_ground:
 		if Input.is_action_just_pressed("jump_Player" + str(player_index+1)):
-			_velocity.y += JUMP_POWER
+			_velocity.y += JUMP_POWER 
 			$JumpSoundPlayer.play()
 
 		_velocity *= 1.0 - GROUND_FRICTION
@@ -139,7 +139,7 @@ func _process(delta: float):
 		_hit_velocity = Vector3()
 		_birds_effect.play()
 
-	var new_velocity := move_and_slide(_velocity * min(delta, 0.3))
+	var new_velocity := move_and_slide(_velocity / 60.0)
 	var horizontal_velocity := Vector2(new_velocity.x, new_velocity.z)
 
 	if horizontal_velocity.length_squared() > 0.5 and abs(new_velocity.y) < 0.0001:

@@ -77,7 +77,7 @@ func damage_sand(position: Vector3, damage_amount: int) -> void:
 
 func internal_damage_sand(position_index: int, damage_amount: int) -> void:
 	if position_index < 0 or position_index >= sand_voxels.size():
-		print("Trying to damage sand outside of the sand bounds!")
+		#print("Trying to damage sand outside of the sand bounds!")
 		return
 
 	if sand_voxels[position_index] == SandType.NONE:
@@ -99,16 +99,16 @@ func damage_all_sand_up_to_height(max_height: int, damage_amount: int) -> void:
 
 func add_sand(position: Vector3, type_of_sand: int) -> bool:
 	if type_of_sand == SandType.NONE:
-		print("Trying to add sand outside of the sand bounds!")
+		#print("Trying to add sand outside of the sand bounds!")
 		return false
 
 	var position_index := position_to_index(position)
 	if position_index < 0 or position_index >= sand_voxels.size():
-		print("Trying to add sand outside of the sand bounds!")
+		#print("Trying to add sand outside of the sand bounds!")
 		return false
 
 	if sand_voxels[position_index] != SandType.NONE:
-		print("Replacing sand that is already there!")
+		#print("Replacing sand that is already there!")
 		internal_remove_sand(position_index)
 		return false
 
