@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://Scenes/EndGameOverlay.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/EndGameOverlay.cs" type="Script" id=1]
 [ext_resource path="res://Prefabs/ButtonWithSound/ButtonWithSound.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Font/LemonMilk.otf" type="DynamicFontData" id=3]
 
@@ -143,5 +143,5 @@ text = "Go to Main Menu"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/fade = SubResource( 2 )
-[connection signal="pressed" from="ColorRect/MarginContainer/VBoxContainer/HBoxContainer/PlayAgainButton" to="." method="_on_PlayAgainButton_pressed"]
-[connection signal="pressed" from="ColorRect/MarginContainer/VBoxContainer/HBoxContainer/GoToMenuButton" to="." method="_on_GoToMenuButton_pressed"]
+[connection signal="pressed" from="ColorRect/MarginContainer/VBoxContainer/HBoxContainer/PlayAgainButton" to="." method="OnPlayAgainButtonPressed"]
+[connection signal="pressed" from="ColorRect/MarginContainer/VBoxContainer/HBoxContainer/GoToMenuButton" to="." method="OnGoToMenuButtonPressed"]

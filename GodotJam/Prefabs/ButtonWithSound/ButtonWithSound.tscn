@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Prefabs/ButtonWithSound/ButtonWithSound.gd" type="Script" id=1]
+[ext_resource path="res://Prefabs/ButtonWithSound/ButtonWithSound.cs" type="Script" id=1]
 [ext_resource path="res://Sounds/Button02.ogg" type="AudioStream" id=2]
 
 [node name="Button" type="Button"]
@@ -13,4 +13,4 @@ __meta__ = {
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
-[connection signal="pressed" from="." to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="." to="." method="OnButtonPressed"]

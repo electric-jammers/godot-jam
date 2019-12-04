@@ -2,11 +2,11 @@
 
 [ext_resource path="res://Shaders/sun.shader" type="Shader" id=1]
 [ext_resource path="res://Materials/moon.material" type="Material" id=2]
-[ext_resource path="res://Scenes/DayNight.gd" type="Script" id=3]
-[ext_resource path="res://Scenes/SunPointer.gd" type="Script" id=4]
+[ext_resource path="res://Scenes/DayNight.cs" type="Script" id=3]
+[ext_resource path="res://Scenes/SunPointer.cs" type="Script" id=4]
 [ext_resource path="res://Textures/sun.png" type="Texture" id=5]
-[ext_resource path="res://Scenes/MoonQuad.gd" type="Script" id=6]
-[ext_resource path="res://Scenes/SunQuad.gd" type="Script" id=7]
+[ext_resource path="res://Scenes/MoonQuad.cs" type="Script" id=6]
+[ext_resource path="res://Scenes/SunQuad.cs" type="Script" id=7]
 
 [sub_resource type="QuadMesh" id=1]
 size = Vector2( 7, 7 )
@@ -36,7 +36,7 @@ light_color = Color( 0.8, 0.854902, 1, 1 )
 light_energy = 0.8
 shadow_enabled = true
 script = ExtResource( 4 )
-isSun = false
+IsSun = false
 
 [node name="SunQuad" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -60, -27.963 )

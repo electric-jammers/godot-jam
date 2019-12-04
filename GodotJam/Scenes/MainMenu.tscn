@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Font/LemonMilk.otf" type="DynamicFontData" id=1]
-[ext_resource path="res://Scenes/MainMenu.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/MainMenu.cs" type="Script" id=2]
 [ext_resource path="res://Prefabs/ButtonWithSound/ButtonWithSound.tscn" type="PackedScene" id=3]
 
 [sub_resource type="Shader" id=1]
@@ -76,5 +76,5 @@ margin_top = 339.0
 margin_right = 204.0
 margin_bottom = 359.0
 text = "Quit Game"
-[connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
-[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_QuitButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/StartButton" to="." method="OnStartButtonPressed"]
+[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="OnQuitButtonPressed"]
