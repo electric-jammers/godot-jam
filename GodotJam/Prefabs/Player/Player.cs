@@ -13,13 +13,13 @@ public class Player : KinematicBody
 	[Subnode("CamParent")] 					Spatial WinnerCamParent;
 	[Subnode("CamParent/Camera")] 			Camera WinnerCam;
 
-	[Subnode("articles/Walking")] 			Particles WalkingParticles;
-	[Subnode("articles/Sand")] 				Particles SandParticles;
-	[Subnode("articles/Bubbles")] 			Particles BubbleParticles;
+	[Subnode("Mesh/Particles/Walking")] 	Particles WalkingParticles;
+	[Subnode("Mesh/Particles/Sand")] 		Particles SandParticles;
+	[Subnode("Mesh/Particles/Bubbles")] 	Particles BubbleParticles;
 	[Subnode("StepTimer")] 					Timer StepTimer;
-	[Subnode("PickupTimer")] 				Timer Pickup_recently_timer;
+	[Subnode("PickupTimer")] 				Timer PickupRecentlyTimer;
 
-	[Subnode("Mesh/Particles/BirdsEffect")]	AudioStreamPlayer3D BirdsEffect;
+	[Subnode("Mesh/Particles/BirdsEffect")]	Spatial BirdsEffect;
 
 	// Consts
 	private const float AIR_FRICTION = 0.25f;
@@ -48,7 +48,7 @@ public class Player : KinematicBody
 	private bool IsAnimatingShovel = false;
 
 	private Array<Spatial> CarriedBlocks = new Array<Spatial>();
-	private Array<int> CarriedBlocksInfo = new Array<int>();
+	private Array<SandSystem.SandType> CarriedBlocksInfo = new Array<SandSystem.SandType>();
 	
 	public override void _Ready()
 	{
@@ -116,31 +116,29 @@ public class Player : KinematicBody
 			}
 		}
 
-		
+		var sandInfo = sand.ExtractSand(actionLocation);
+		if (sandInfo != null)
+		{
+			Spatial newBlock = sandInfo.Item1;
+
+			CarriedBlocks.Add(newBlock);
+			CarriedBlocksInfo.Add(sandInfo.Item2);
+
+			CollisionShape blockCollision = newBlock.GetNode<CollisionShape>("CollisionShape");
+			blockCollision.Disabled = true;
+
+			newBlock.GetParentSpatial().RemoveChild(newBlock);
+			newBlock.Translation = new Vector3(0.0f, CarriedBlocks.Count * (0.1f + SandSystem.BLOCK_SIZE) + 2.0f, 0.0f);
+			AddChild(newBlock);
+
+			PickupRecentlyTimer.Start();
+
+			GetNode<AudioStreamPlayer>("SandSoundPlayer").Play();
+			SandParticles.Emitting = true;
+			Shovel.Stop(true);
+			Shovel.Play("ShovelAnim");
+		}
 /*
-
-	var sand_info = sand.extract_sand(action_location)
-
-	if sand_info.size() > 0:
-		var new_block = sand_info[0]
-
-		_carried_blocks.push_back(new_block)
-		_carried_blocks_info.push_back(sand_info[1])
-
-		var block_collision = new_block.get_node("CollisionShape") as CollisionShape
-		block_collision.disabled = true
-
-		new_block.get_parent_spatial().remove_child(new_block)
-		new_block.translation = Vector3(0.0, _carried_blocks.size() * (0.1 + SandSystem.BLOCK_SIZE) + 2.0, 0.0)
-		add_child(new_block)
-
-		_pickup_recently_timer.start()
-
-		$SandSoundPlayer.play()
-		_sand_particles.emitting = true
-		_shovel.stop(true)
-		_shovel.play("ShovelAnim")
-
 
 
 	# Placing

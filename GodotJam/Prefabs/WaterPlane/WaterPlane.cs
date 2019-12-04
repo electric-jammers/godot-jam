@@ -13,6 +13,8 @@ public class WaterPlane : Spatial
 	// Funcs
 	public override void _Ready()
 	{
+		this.FindSubnodes();
+
 		ShaderMaterial shaderMat = (ShaderMaterial)WaterPlaneMesh.GetSurfaceMaterial(0);
 		shaderMat.SetShaderParam("waterTexture", GD.Load<Texture>("res://Textures/SimpleCaustics.png"));
 		GameState.Instance._WaterSystem = this;

@@ -37,13 +37,12 @@ script = ExtResource( 5 )
 [node name="Sounds" type="Node" parent="."]
 
 [node name="Wind" parent="Sounds" instance=ExtResource( 9 )]
-stream_array = [ ExtResource( 21 ), ExtResource( 19 ), ExtResource( 18 ), ExtResource( 20 ) ]
-looping = true
-loop_duration = 4
+StreamArray = [ ExtResource( 21 ), ExtResource( 19 ), ExtResource( 18 ), ExtResource( 20 ) ]
+Looping = true
 
 [node name="SeagulsAndDucks" parent="Sounds" instance=ExtResource( 9 )]
-stream_array = [ ExtResource( 14 ), ExtResource( 11 ), ExtResource( 10 ), ExtResource( 17 ), ExtResource( 15 ), ExtResource( 13 ), ExtResource( 16 ), ExtResource( 12 ) ]
-looping = true
+StreamArray = [ ExtResource( 14 ), ExtResource( 11 ), ExtResource( 10 ), ExtResource( 17 ), ExtResource( 15 ), ExtResource( 13 ), ExtResource( 16 ), ExtResource( 12 ) ]
+Looping = true
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 20, 30 )
@@ -69,7 +68,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 13, 0 )
 
 [node name="KinematicBody" parent="." instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 13, 0 )
-player_index = 1
+PlayerIndex = 1
 
 [node name="OmniLight" type="OmniLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.3874, 14.4945, 16.0022 )

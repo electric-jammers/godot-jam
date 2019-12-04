@@ -99,7 +99,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.03877, 0 )
 
 [node name="BirdsEffect" parent="Mesh/Particles" instance=ExtResource( 32 )]
 transform = Transform( 0.972686, 0, 0.232124, 0, 1, 0, -0.232124, 0, 0.972686, 0, 2.16607, 0 )
-speed = 2
+Speed = 2
 
 [node name="FloorCast" type="RayCast" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.254625, 0 )
@@ -107,13 +107,13 @@ enabled = true
 cast_to = Vector3( 0, -0.5, 0 )
 
 [node name="DrownSoundPlayer" parent="." instance=ExtResource( 3 )]
-stream_array = [ ExtResource( 11 ), ExtResource( 8 ), ExtResource( 4 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ) ]
+StreamArray = [ ExtResource( 11 ), ExtResource( 8 ), ExtResource( 4 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ) ]
 
 [node name="SandSoundPlayer" parent="." instance=ExtResource( 3 )]
-stream_array = [ ExtResource( 23 ), ExtResource( 22 ), ExtResource( 19 ), ExtResource( 18 ), ExtResource( 26 ), ExtResource( 20 ), ExtResource( 12 ), ExtResource( 14 ), ExtResource( 17 ), ExtResource( 15 ) ]
+StreamArray = [ ExtResource( 23 ), ExtResource( 22 ), ExtResource( 19 ), ExtResource( 18 ), ExtResource( 26 ), ExtResource( 20 ), ExtResource( 12 ), ExtResource( 14 ), ExtResource( 17 ), ExtResource( 15 ) ]
 
 [node name="JumpSoundPlayer" parent="." instance=ExtResource( 3 )]
-stream_array = [ ExtResource( 16 ), ExtResource( 25 ), ExtResource( 27 ), ExtResource( 21 ), ExtResource( 13 ) ]
+StreamArray = [ ExtResource( 16 ), ExtResource( 25 ), ExtResource( 27 ), ExtResource( 21 ), ExtResource( 13 ) ]
 
 [node name="DashTimer" type="Timer" parent="."]
 wait_time = 0.35

@@ -46,7 +46,7 @@ public class SandSystem : Node
 		// Bedrock
 		for (int z = 0; z < SIZE_Z; z++)
 		{
-			for (int x = 0; z < SIZE_X; x++)
+			for (int x = 0; x < SIZE_X; x++)
 			{
 				AddSand(new Vector3(x * BLOCK_SIZE, 0, z * BLOCK_SIZE) - RootPosition, SandType.Rock);
 			}	
@@ -61,7 +61,7 @@ public class SandSystem : Node
 		// Initial land
 		for (int z = 0; z < SIZE_Z; z++)
 		{
-			for (int x = 0; z < SIZE_X; x++)
+			for (int x = 0; x < SIZE_X; x++)
 			{
 				float n = noise.GetNoise2d(x, z) * 5.0f + 5.0f;
 				for (int ni = 0; ni < n; ni++)
@@ -96,7 +96,7 @@ public class SandSystem : Node
 
 	private int PositionToIndex(Vector3 position)
 	{
-		position = position + RootPosition / BLOCK_SIZE;
+		position = (position + RootPosition) / BLOCK_SIZE;
 
 		int x = (int)position.x;
 		int y = (int)position.y;
@@ -205,7 +205,7 @@ public class SandSystem : Node
 			nextPositionToCheck = new Vector3
 			{
 				x = nextPositionToCheck.x,
-				y = nextPositionToCheck.y - BLOCK_SIZE, //TODO: check this?!
+				y = nextPositionToCheck.y - 1.0f,// BLOCK_SIZE, //TODO: check this?!
 				z = nextPositionToCheck.z,
 			};
 
