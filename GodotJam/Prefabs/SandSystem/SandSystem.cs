@@ -205,7 +205,7 @@ public class SandSystem : Node
 			nextPositionToCheck = new Vector3
 			{
 				x = nextPositionToCheck.x,
-				y = nextPositionToCheck.y - 1.0f,// BLOCK_SIZE, //TODO: check this?!
+				y = nextPositionToCheck.y - BLOCK_SIZE, //TODO: check this?!
 				z = nextPositionToCheck.z,
 			};
 

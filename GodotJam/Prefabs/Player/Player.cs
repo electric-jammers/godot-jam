@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Godot;
 using Godot.Collections;
 
@@ -19,7 +20,7 @@ public class Player : KinematicBody
 	[Subnode("StepTimer")] 					Timer StepTimer;
 	[Subnode("PickupTimer")] 				Timer PickupRecentlyTimer;
 
-	[Subnode("Mesh/Particles/BirdsEffect")]	Spatial BirdsEffect;
+	[Subnode("Mesh/Particles/BirdsEffect")]	BirdEffect BirdsEffect;
 
 	// Consts
 	private const float AIR_FRICTION = 0.25f;
@@ -138,91 +139,129 @@ public class Player : KinematicBody
 			Shovel.Stop(true);
 			Shovel.Play("ShovelAnim");
 		}
-/*
+
+		// Placing
+		if (Input.IsActionJustPressed($"action_place_Player{PlayerIndex+1}"))
+		{
+			if (CarriedBlocks.Count > 0)
+			{
+				Vector3 inFront = actionLocation + new Vector3(0.0f, 10.0f, 0.0f);
+				if (sand.AddSand(inFront, CarriedBlocksInfo.Last()))
+				{
+					CarriedBlocks.Last().QueueFree();
+					CarriedBlocks.RemoveAt(CarriedBlocks.Count-1);
+					CarriedBlocksInfo.RemoveAt(CarriedBlocksInfo.Count-1);
+
+					GetNode<AudioStreamPlayer>("SandSoundPlayer").Play();
+					SandParticles.Emitting = true;
+
+					IsAnimatingShovel = true;
+				}
+			}
+		}
+
+		// "Physics"
+		if (OnGround)
+		{
+			if (Input.IsActionJustPressed($"jump_Player{PlayerIndex+1}"))
+			{
+				Velocity.y += JUMP_POWER;
+				GetNode<AudioStreamPlayer>("JumpSoundPlayer").Play();
+			}
+			
+			Velocity *= (1.0f - GROUND_FRICTION);
+		}
+		else
+		{
+			Velocity *= new Vector3(1.0f - AIR_FRICTION, 1.0f, 1.0f - AIR_FRICTION);
+			Velocity += new Vector3(0.0f, -GRAVITY, 0.0f);
+		}
+
+		// Getting hit
+		if (HitVelocity.LengthSquared() > 0.01)
+		{
+			Velocity += HitVelocity;
+			HitVelocity = Vector3.Zero;
+			BirdsEffect.Play();
+		}
+			
+		Vector3 newVelocity = MoveAndSlide(Velocity / 60.0f);
+		Vector2 horizontalVelocity = new Vector2(newVelocity.x, newVelocity.z);
+
+		if (horizontalVelocity.LengthSquared() > 0.5f && Mathf.Abs(newVelocity.y) < 0.0001f)
+		{
+			WalkingParticles.Emitting = true;
+		}
 
 
-	# Placing
-	if Input.is_action_just_pressed("action_place_Player" + str(player_index+1)):
-		if not _carried_blocks.empty():
-			var in_front = action_location + Vector3(0.0, 10.0, 0.0)
-			if sand.add_sand(in_front, _carried_blocks_info.back()):
-				_carried_blocks.pop_back().queue_free()
-				_carried_blocks_info.pop_back()
-				$SandSoundPlayer.play()
-				_sand_particles.emitting = true
+		// Detect walls and hop up (only if not hopped or collected recently)
+		if (StepTimer.TimeLeft <= 0.0f && PickupRecentlyTimer.TimeLeft <= 0.0f)
+		{
+			for (int slideIndex = 0; slideIndex < GetSlideCount(); slideIndex++)
+			{
+				KinematicCollision slideColl = GetSlideCollision(slideIndex);
+				
+				float sandHeightHere = GameState.Instance.SandSystem.GetSandHeight(Translation + new Vector3(SandSystem.BLOCK_SIZE, 0.0f, SandSystem.BLOCK_SIZE) * 0.5f);
+				float sandHeightThere = GameState.Instance.SandSystem.GetSandHeight(GetPickupActionLocation());
+				
+				// if player_index == 0:
+					// $Mesh/DebugLabel.text = "Hop: " + str(sand_height_here) + " -> " + str(sand_height_there)
 
-				_is_animating_shovel = true
+				if (sandHeightThere == sandHeightHere + 1)
+				{
+					Velocity.y += STEP_POWER;
+					StepTimer.Start();
+					break;
+				}
+			}
+		}
 
-	# "Physics"
-	if _on_ground:
-		if Input.is_action_just_pressed("jump_Player" + str(player_index+1)):
-			_velocity.y += JUMP_POWER 
-			$JumpSoundPlayer.play()
+		// Dash
+		if (DashTimer.TimeLeft <= 0.0f && Input.IsActionJustPressed($"dash_Player{PlayerIndex+1}"))
+		{
+			DashTimer.Start();
+			Velocity += DASH_POWER * Meshes.Transform.basis.z;
+		}
+			
+		// Facing
+		if (!Input.IsActionPressed($"strafe_Player{PlayerIndex+1}"))
+		{
+			Vector3 groundVelocity = Velocity;
+			groundVelocity.y = 0.0f;
 
-		_velocity *= 1.0 - GROUND_FRICTION
-	else:
-		_velocity *= Vector3(1.0 - AIR_FRICTION, 1.0, 1.0 - AIR_FRICTION)
-		_velocity += Vector3(0.0, -GRAVITY, 0.0)
+			if (groundVelocity.LengthSquared() > 100.0f)
+			{
+				FaceDir(groundVelocity);
+			}
+		}
+		else
+		{
+			Vector3 lookDir = Vector3.Zero;
+			lookDir.x = Input.GetActionStrength($"look_-X_Player{PlayerIndex+1}") - Input.GetActionStrength($"look_+X_Player{PlayerIndex+1}");
+			lookDir.z = Input.GetActionStrength($"look_-Y_Player{PlayerIndex+1}") - Input.GetActionStrength($"look_+Y_Player{PlayerIndex+1}");
 
-	# Getting hit
-	if _hit_velocity.length_squared() > 0.01:
-		_velocity += _hit_velocity
-		_hit_velocity = Vector3()
-		_birds_effect.play()
+			if (lookDir.LengthSquared() > 0.5f * 0.5f)
+			{
+				FaceDir(lookDir);
+			}
+		}
 
-	var new_velocity := move_and_slide(_velocity / 60.0)
-	var horizontal_velocity := Vector2(new_velocity.x, new_velocity.z)
+		// Death by drowning
+		if (Translation.y < -4.0f)
+		{
+			GetNode<AudioStreamPlayer>("DrownSoundPlayer").Play();
+			GameState.Instance.ReportPlayerDeath(PlayerIndex);
 
-	if horizontal_velocity.length_squared() > 0.5 and abs(new_velocity.y) < 0.0001:
-		_walking_particles.emitting = true
+			while (CarriedBlocks.Count > 0)
+			{
+				CarriedBlocks.Last().QueueFree();
+				CarriedBlocks.RemoveAt(CarriedBlocks.Count-1);
+				CarriedBlocksInfo.RemoveAt(CarriedBlocksInfo.Count-1);
+			}
 
-	# Detect walls and hop up (only if not hopped or collected recently)
-	if _step_timer.time_left <= 0.0 and _pickup_recently_timer.time_left <= 0.0:
-		for slide_index in get_slide_count():
-			var slide_coll: KinematicCollision = get_slide_collision(slide_index )
-
-			var sand_height_here = GameState.get_sand_system().get_sand_height(translation + Vector3(SandSystem.BLOCK_SIZE, 0.0, SandSystem.BLOCK_SIZE) * 0.5)
-			var sand_height_there = GameState.get_sand_system().get_sand_height(_get_pickup_action_location())
-
-			# if player_index == 0:
-				# $Mesh/DebugLabel.text = "Hop: " + str(sand_height_here) + " -> " + str(sand_height_there)
-
-			if sand_height_there == sand_height_here + 1:
-				_velocity.y += STEP_POWER
-				_step_timer.start()
-				break
-
-	# Dash
-	if _dash_timer.time_left <= 0.0 and Input.is_action_just_pressed("dash_Player" + str(player_index+1)):
-		_dash_timer.start()
-		_velocity += DASH_POWER * _meshes.transform.basis.z
-
-	# Facing
-	if not Input.is_action_pressed("strafe_Player" + str(player_index+1)):
-		var ground_velocity = _velocity
-		ground_velocity.y = 0.0
-
-		if ground_velocity.length_squared() > 100.0:
-			_face_dir(ground_velocity)
-	else:
-		var look_dir := Vector3()
-		look_dir.x = Input.get_action_strength("look_-X_Player" + str(player_index+1)) - Input.get_action_strength("look_+X_Player" + str(player_index+1))
-		look_dir.z = Input.get_action_strength("look_-Y_Player" + str(player_index+1)) - Input.get_action_strength("look_+Y_Player" + str(player_index+1))
-
-		if look_dir.length_squared() > 0.5 * 0.5:
-			_face_dir(look_dir)
-
-	# Death by drowning
-	if translation.y < -4:
-		$DrownSoundPlayer.play()
-		GameState.report_player_death(player_index)
-		while not _carried_blocks.empty():
-			_carried_blocks.pop_back().queue_free()
-			_carried_blocks_info.pop_back()
-		_is_dead = true
-		_bubble_particles.emitting = true
-
-*/
+			IsDead = true;
+			BubbleParticles.Emitting = true;
+		}
 	}
 
 	private Vector3 GetPickupActionLocation() 

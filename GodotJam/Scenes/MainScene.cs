@@ -25,7 +25,6 @@ class MainScene : Spatial
 
 	private void OnGameOver(int winner)
 	{
-		//TODO: check!
 		GetNode<EndGameOverlay>("EndGameOverlay").Display(winner);
 	}
 }

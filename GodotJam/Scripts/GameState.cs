@@ -123,7 +123,7 @@ public class GameState : Node
 		return _SandSystem;
 	}
 
-	private void ReportPlayerDeath(int playerIndex)
+	public void ReportPlayerDeath(int playerIndex)
 	{
 		AlivePlayers[playerIndex] = false;
 		GameOverTimer.Start();
