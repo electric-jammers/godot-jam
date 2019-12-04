@@ -28,6 +28,10 @@ GameState="*res://Scripts/GameState.cs"
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
 
+[editor_plugins]
+
+enabled=PoolStringArray( "mono_debugger" )
+
 [input]
 
 ui_accept={
@@ -212,6 +216,10 @@ dash_Player2={
 "events": [ Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":1,"button_index":2,"pressure":0.0,"pressed":false,"script":null)
  ]
 }
+
+[mono]
+
+debugger_agent/wait_timeout=20000
 
 [physics]
 
