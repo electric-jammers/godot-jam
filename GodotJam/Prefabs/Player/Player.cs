@@ -115,29 +115,29 @@ public class Player : KinematicBody
 					return;
 				}
 			}
-		}
+		
+			var sandInfo = sand.ExtractSand(actionLocation);
+			if (sandInfo != null)
+			{
+				Spatial newBlock = sandInfo.Item1;
 
-		var sandInfo = sand.ExtractSand(actionLocation);
-		if (sandInfo != null)
-		{
-			Spatial newBlock = sandInfo.Item1;
+				CarriedBlocks.Add(newBlock);
+				CarriedBlocksInfo.Add(sandInfo.Item2);
 
-			CarriedBlocks.Add(newBlock);
-			CarriedBlocksInfo.Add(sandInfo.Item2);
+				CollisionShape blockCollision = newBlock.GetNode<CollisionShape>("CollisionShape");
+				blockCollision.Disabled = true;
 
-			CollisionShape blockCollision = newBlock.GetNode<CollisionShape>("CollisionShape");
-			blockCollision.Disabled = true;
+				newBlock.GetParentSpatial().RemoveChild(newBlock);
+				newBlock.Translation = new Vector3(0.0f, CarriedBlocks.Count * (0.1f + SandSystem.BLOCK_SIZE) + 2.0f, 0.0f);
+				AddChild(newBlock);
 
-			newBlock.GetParentSpatial().RemoveChild(newBlock);
-			newBlock.Translation = new Vector3(0.0f, CarriedBlocks.Count * (0.1f + SandSystem.BLOCK_SIZE) + 2.0f, 0.0f);
-			AddChild(newBlock);
+				PickupRecentlyTimer.Start();
 
-			PickupRecentlyTimer.Start();
-
-			GetNode<AudioStreamPlayer>("SandSoundPlayer").Play();
-			SandParticles.Emitting = true;
-			Shovel.Stop(true);
-			Shovel.Play("ShovelAnim");
+				GetNode<AudioStreamPlayer>("SandSoundPlayer").Play();
+				SandParticles.Emitting = true;
+				Shovel.Stop(true);
+				Shovel.Play("ShovelAnim");
+			}
 		}
 
 		// Placing
